@@ -10,7 +10,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    TextStyle ts = TextStyle(color: Colors.white);
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -20,14 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
               currentAccountPicture: CircleAvatar(
                   backgroundImage:
                       CachedNetworkImageProvider(UserData().user.photoUrl)),
-              accountName: new Text(
-                UserData().user.displayName,
-                style: ts,
-              ),
-              accountEmail: new Text(
-                UserData().user.email,
-                style: ts,
-              ),
+              accountName: new Text(UserData().user.displayName),
+              accountEmail: new Text(UserData().user.email),
               decoration: BoxDecoration(
                   color: Colors.black,
                   image: DecorationImage(
