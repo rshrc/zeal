@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'app_data.dart';
+
 final GoogleSignIn googleSignIn = new GoogleSignIn();
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -13,5 +15,6 @@ Future signIn(Function action) async {
       .signInWithGoogle(idToken: gSA.idToken, accessToken: gSA.accessToken)
       .then((user) {
     action();
+    UserData().user = user;
   });
 }

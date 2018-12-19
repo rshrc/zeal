@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'ui/buttons.dart';
+import 'ui/pages/home.dart';
 
 void main() {
   runApp(MaterialApp(
     home: new SplashScreen(),
     routes: <String, WidgetBuilder>{
       '/login': (BuildContext context) => new AppWrapper(),
+      '/home': (BuildContext context) => new HomeScreen(),
     },
   ));
 }
@@ -146,7 +148,10 @@ class _AppState extends State<App> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: GoogleSignInButton(
-              onPressed: () {},
+              onPressed: () {
+                print("Sign in Successful!\nWelcome to FunKrafte!");
+                Navigator.of(context).pushReplacementNamed('/home');
+              },
             ),
           ),
         )
