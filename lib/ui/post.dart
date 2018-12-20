@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:funkrafte/data/app_data.dart';
 import 'package:funkrafte/data/post.dart';
 
 class PostWidget extends StatelessWidget {
@@ -28,7 +27,7 @@ class PostWidget extends StatelessWidget {
               ],
             ),
           ),
-          PostInfoBar(),
+          PostInfoBar(p.caption),
         ],
       ),
     );
@@ -73,17 +72,17 @@ class UserInfoRowState extends State<UserInfoRow> {
 
   @override
   Widget build(BuildContext context) {
+    _getUserImageUrl();
+    _getUserName();
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Row(
         children: <Widget>[
-          CircleAvatar(
-              backgroundImage:
-                  CachedNetworkImageProvider(UserData().user.photoUrl)),
+          CircleAvatar(backgroundImage: CachedNetworkImageProvider(imageUrl)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: Text(
-              UserData().user.displayName,
+              userName,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -94,6 +93,9 @@ class UserInfoRowState extends State<UserInfoRow> {
 }
 
 class PostInfoBar extends StatefulWidget {
+  String caption;
+  PostInfoBar(this.caption);
+
   @override
   PostInfoBarState createState() {
     return new PostInfoBarState();
@@ -137,8 +139,7 @@ class PostInfoBarState extends State<PostInfoBar> {
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 8.0, right: 16.0, left: 16.0),
-            child: Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."),
+            child: Text(widget.caption),
           ),
         ],
       ),

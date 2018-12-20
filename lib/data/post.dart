@@ -8,13 +8,13 @@ class Post {
   int likes = 0;
   bool liked = false;
   List<String> comments = new List();
-  DocumentReference ref;
+  DocumentSnapshot ds;
 
-  Post({this.id, this.imageUrl, this.caption, this.uid, this.ref}) {
-    if (ref == null)
+  Post({this.id, this.imageUrl, this.caption, this.uid, this.ds}) {
+    if (ds == null)
       publishDoc();
     else
-      loadFromRef();
+      loadFromDs();
   }
 
   void addComment(String comment) {
@@ -47,13 +47,15 @@ class Post {
       };
 
   Future<void> publishDoc() async {
-    ref = await Firestore.instance.collection('posts').add(this.toJson());
+    DocumentReference ref =
+        await Firestore.instance.collection('posts').add(this.toJson());
     id = ref.documentID;
     ref.updateData({'id': id});
+    ds = await ref.get();
   }
 
-  Future<void> loadFromRef() async {
-    DocumentSnapshot ds = await ref.get();
+  Future<void> loadFromDs() async {
+    print("Loading from ref");
     id = ds['id'];
     imageUrl = ds['imageUrl'];
     caption = ds['caption'];

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:funkrafte/data/post.dart';
 import 'package:funkrafte/ui/post.dart';
@@ -10,17 +11,18 @@ class Feed extends StatefulWidget {
 class _FeedState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(
-      children: _feedColumnBuilder(),
-    ));
-  }
-
-  List<Widget> _feedColumnBuilder() {
-    List<Widget> ret = new List();
-    Post p = new Post();
-    ret.add(PostWidget(p: p));
-    ret.add(PostWidget(p: p));
-    return ret;
+    return StreamBuilder(
+        stream: Firestore.instance.collection('posts').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return const Text("Loading...");
+          else
+            return ListView.builder(
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, index) {
+                  return PostWidget(
+                      p: Post(ds: snapshot.data.documents[index]));
+                });
+        });
   }
 }
