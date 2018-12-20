@@ -1,8 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:funkrafte/data/app_data.dart';
+import 'package:funkrafte/data/post.dart';
 
-class Post extends StatelessWidget {
+class PostWidget extends StatelessWidget {
+  final Post p;
+
+  PostWidget({@required this.p});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -16,7 +22,9 @@ class Post extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Positioned.fill(
-                    child: Image.asset('assets/logo.png', fit: BoxFit.cover))
+                    child: CachedNetworkImage(
+                        imageUrl: p.imageUrl, fit: BoxFit.cover))
+                //child: Image.asset('assets/logo.png', fit: BoxFit.cover))
               ],
             ),
           ),
@@ -27,7 +35,42 @@ class Post extends StatelessWidget {
   }
 }
 
-class UserInfoRow extends StatelessWidget {
+class UserInfoRow extends StatefulWidget {
+  final String id;
+  UserInfoRow({this.id});
+
+  @override
+  UserInfoRowState createState() {
+    return new UserInfoRowState();
+  }
+}
+
+class UserInfoRowState extends State<UserInfoRow> {
+  String imageUrl;
+  String userName;
+
+  Future<void> _getUserName() async {
+    var name = await Firestore.instance
+        .collection('users')
+        .where('id', isEqualTo: widget.id)
+        .getDocuments()
+        .then((result) => result.documents.elementAt(0)['name']);
+    setState(() {
+      userName = name;
+    });
+  }
+
+  Future<void> _getUserImageUrl() async {
+    var url = await Firestore.instance
+        .collection('users')
+        .where('id', isEqualTo: widget.id)
+        .getDocuments()
+        .then((result) => result.documents.elementAt(0)['photoUrl']);
+    setState(() {
+      imageUrl = url;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,7 +102,6 @@ class PostInfoBar extends StatefulWidget {
 
 class PostInfoBarState extends State<PostInfoBar> {
   bool like = false;
-  int likeCount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +113,7 @@ class PostInfoBarState extends State<PostInfoBar> {
           Row(
             children: <Widget>[
               GestureDetector(
-                onTap: () => setState(() {
-                      like = !like;
-                      if (like)
-                        likeCount += 1;
-                      else if (!like && likeCount > 0) likeCount -= 1;
-                    }),
+                onTap: () => setState(() {}),
                 child: Padding(
                   padding: EdgeInsets.only(top: 8.0, left: 16.0, bottom: 8.0),
                   child: like
@@ -94,7 +131,7 @@ class PostInfoBarState extends State<PostInfoBar> {
             padding:
                 EdgeInsets.only(top: 8.0, right: 16.0, left: 16.0, bottom: 8.0),
             child: Text(
-              "$likeCount likes",
+              "0 likes",
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17.5),
             ),
           ),

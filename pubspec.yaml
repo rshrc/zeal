@@ -13,6 +13,8 @@ dependencies:
   google_sign_in: any
   firebase_auth: any
   cached_network_image: any
+  firebase_storage: any
+  cloud_firestore: any
 
 dev_dependencies:
   flutter_test:

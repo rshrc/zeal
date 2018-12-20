@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:funkrafte/data/post.dart';
 import 'package:funkrafte/ui/post.dart';
 
 class Feed extends StatefulWidget {
@@ -17,8 +18,9 @@ class _FeedState extends State<Feed> {
 
   List<Widget> _feedColumnBuilder() {
     List<Widget> ret = new List();
-    ret.add(Post());
-    ret.add(Post());
+    Post p = new Post();
+    ret.add(PostWidget(p: p));
+    ret.add(PostWidget(p: p));
     return ret;
   }
 }
