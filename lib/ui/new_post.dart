@@ -62,10 +62,11 @@ class PostFormState extends State<PostForm> {
                       ),
               ),
               Center(
-                child: UploadImageButton(onPressed: () {
-                  getImage().then((value) => file = value);
-                  setState(() {});
-                }),
+                child: UploadImageButton(
+                    onPressed: () => getImage().then((value) {
+                          file = value;
+                          setState(() {});
+                        })),
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: "Caption"),
