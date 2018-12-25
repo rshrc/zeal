@@ -14,7 +14,7 @@ class PostWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          UserInfoRow(),
+          UserInfoRow(id: p.uid),
           SizedBox(
             height: MediaQuery.of(context).size.width,
             width: MediaQuery.of(context).size.width,
@@ -27,7 +27,7 @@ class PostWidget extends StatelessWidget {
               ],
             ),
           ),
-          PostInfoBar(p.caption),
+          PostInfoBar(p),
         ],
       ),
     );
@@ -46,7 +46,7 @@ class UserInfoRow extends StatefulWidget {
 
 class UserInfoRowState extends State<UserInfoRow> {
   String imageUrl;
-  String userName;
+  String userName = "";
 
   Future<void> _getUserName() async {
     var name = await Firestore.instance
@@ -78,7 +78,10 @@ class UserInfoRowState extends State<UserInfoRow> {
       padding: EdgeInsets.all(16.0),
       child: Row(
         children: <Widget>[
-          CircleAvatar(backgroundImage: CachedNetworkImageProvider(imageUrl)),
+          imageUrl == null
+              ? CircularProgressIndicator()
+              : CircleAvatar(
+                  backgroundImage: CachedNetworkImageProvider(imageUrl)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             child: Text(
@@ -93,8 +96,8 @@ class UserInfoRowState extends State<UserInfoRow> {
 }
 
 class PostInfoBar extends StatefulWidget {
-  String caption;
-  PostInfoBar(this.caption);
+  Post p;
+  PostInfoBar(this.p);
 
   @override
   PostInfoBarState createState() {
@@ -107,6 +110,7 @@ class PostInfoBarState extends State<PostInfoBar> {
 
   @override
   Widget build(BuildContext context) {
+    like = widget.p.liked;
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Column(
@@ -115,7 +119,7 @@ class PostInfoBarState extends State<PostInfoBar> {
           Row(
             children: <Widget>[
               GestureDetector(
-                onTap: () => setState(() {}),
+                onTap: () => setState(() => widget.p.like()),
                 child: Padding(
                   padding: EdgeInsets.only(top: 8.0, left: 16.0, bottom: 8.0),
                   child: like
@@ -133,13 +137,13 @@ class PostInfoBarState extends State<PostInfoBar> {
             padding:
                 EdgeInsets.only(top: 8.0, right: 16.0, left: 16.0, bottom: 8.0),
             child: Text(
-              "0 likes",
+              "${widget.p.likes} likes",
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17.5),
             ),
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 8.0, right: 16.0, left: 16.0),
-            child: Text(widget.caption),
+            child: Text(widget.p.caption),
           ),
         ],
       ),

@@ -15,7 +15,7 @@ class _FeedState extends State<Feed> {
         stream: Firestore.instance.collection('posts').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
-            return const Text("Loading...");
+            return Center(child: CircularProgressIndicator());
           else
             return ListView.builder(
                 itemCount: snapshot.data.documents.length,

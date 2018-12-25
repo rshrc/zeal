@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:funkrafte/data/app_data.dart';
 
 import 'ui/buttons.dart';
 import 'ui/pages/home.dart';
@@ -47,6 +48,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
+
+    // Make our life a bit easier.
+    AppData().scaleFactorH = MediaQuery.of(context).size.height / 900;
+    AppData().scaleFactorW = MediaQuery.of(context).size.width / 450;
+    AppData().scaleFactorA = (MediaQuery.of(context).size.width *
+            MediaQuery.of(context).size.height) /
+        (900 * 450);
+
     return Scaffold(
       appBar: null,
       body: Stack(
@@ -102,6 +111,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
+
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[

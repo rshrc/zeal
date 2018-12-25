@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:funkrafte/data/app_data.dart';
 import 'package:funkrafte/ui/drawer_tabs/feed.dart';
+import 'package:funkrafte/ui/new_post.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -63,8 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.all(MediaQuery.of(context).size.width / 50.0),
             child: Feed(),
           )),
-      floatingActionButton:
-          FloatingActionButton(child: Icon(Icons.create), onPressed: () {}),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.create),
+          onPressed: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => NewPost()))),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       bottomNavigationBar: BottomAppBar(
         shape: CircularNotchedRectangle(),
