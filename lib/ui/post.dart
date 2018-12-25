@@ -137,7 +137,7 @@ class PostInfoBarState extends State<PostInfoBar> {
             padding:
                 EdgeInsets.only(top: 8.0, right: 16.0, left: 16.0, bottom: 8.0),
             child: Text(
-              "${widget.p.likes} likes",
+              widget.p.likes == 1 ? "1 like" : "${widget.p.likes} likes",
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17.5),
             ),
           ),
