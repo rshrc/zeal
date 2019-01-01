@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:funkrafte/data/post.dart';
+import 'package:funkrafte/ui/comments.dart';
 
 class PostWidget extends StatelessWidget {
   final Post p;
@@ -54,9 +55,14 @@ class UserInfoRowState extends State<UserInfoRow> {
         .where('id', isEqualTo: widget.id)
         .getDocuments()
         .then((result) => result.documents.elementAt(0)['name']);
-    setState(() {
-      userName = name;
-    });
+    try {
+      if (this.mounted)
+        setState(() {
+          userName = name;
+        });
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> _getUserImageUrl() async {
@@ -65,9 +71,14 @@ class UserInfoRowState extends State<UserInfoRow> {
         .where('id', isEqualTo: widget.id)
         .getDocuments()
         .then((result) => result.documents.elementAt(0)['photoUrl']);
-    setState(() {
-      imageUrl = url;
-    });
+    try {
+      if (this.mounted)
+        setState(() {
+          imageUrl = url;
+        });
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
@@ -96,7 +107,7 @@ class UserInfoRowState extends State<UserInfoRow> {
 }
 
 class PostInfoBar extends StatefulWidget {
-  Post p;
+  final Post p;
   PostInfoBar(this.p);
 
   @override
@@ -127,26 +138,50 @@ class PostInfoBarState extends State<PostInfoBar> {
                       : Icon(Icons.favorite_border),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 8.0, left: 16.0, bottom: 8.0),
-                child: Icon(Icons.comment),
+              GestureDetector(
+                onTap: () => Navigator.of(context).push(new MaterialPageRoute(
+                    builder: (context) => Comments(p: widget.p))),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 8.0, left: 16.0, bottom: 8.0),
+                  child: Icon(Icons.comment),
+                ),
               ),
             ],
           ),
-          Padding(
-            padding:
-                EdgeInsets.only(top: 8.0, right: 16.0, left: 16.0, bottom: 8.0),
-            child: Text(
-              widget.p.likes == 1 ? "1 like" : "${widget.p.likes} likes",
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17.5),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0, right: 16.0, left: 16.0),
-            child: Text(widget.p.caption),
-          ),
+          LikesAndCaption(p: widget.p),
         ],
       ),
+    );
+  }
+}
+
+class LikesAndCaption extends StatefulWidget {
+  final Post p;
+
+  LikesAndCaption({this.p});
+  @override
+  _LikesAndCaptionState createState() => _LikesAndCaptionState();
+}
+
+class _LikesAndCaptionState extends State<LikesAndCaption> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding:
+              EdgeInsets.only(top: 8.0, right: 16.0, left: 16.0, bottom: 8.0),
+          child: Text(
+            widget.p.likes == 1 ? "1 like" : "${widget.p.likes} likes",
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17.5),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(bottom: 8.0, right: 16.0, left: 16.0),
+          child: Text(widget.p.caption),
+        ),
+      ],
     );
   }
 }

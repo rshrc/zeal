@@ -13,19 +13,27 @@ class Post {
   String currentUid = UserData().user.uid;
   int likes = 0;
   bool liked = false;
-  Map<String, String> comments = new Map();
+  Map<String, List<dynamic>> comments = new Map();
   Set<String> likedBy = new Set();
   DocumentSnapshot ds;
 
   Post({this.id, this.imageUrl, this.caption, this.ds, this.uid}) {
-    if (ds == null)
+    if (ds == null) {
       publishDoc();
-    else
+    } else
       loadFromDs();
   }
 
+  String randomStringGen() {
+    return "${Random().nextInt(10000)}-${Random().nextInt(10000)}-${Random().nextInt(10000)}-${Random().nextInt(10000)}";
+  }
+
   void addComment(String comment) {
-    comments[currentUid] = comment;
+    List<String> currentComment = new List<String>();
+    currentComment.add(currentUid);
+    currentComment.add(comment);
+    comments[randomStringGen()] = currentComment;
+    serverUpdate();
   }
 
   void like() {
@@ -43,7 +51,7 @@ class Post {
     Firestore.instance
         .collection('posts')
         .document(id)
-        .updateData({'likedBy': likedBy.toList()});
+        .updateData({'likedBy': likedBy.toList(), 'comments': comments});
   }
 
   Map<String, dynamic> toJson() => {

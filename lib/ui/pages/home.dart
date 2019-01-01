@@ -59,11 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: Container(
-          margin: MediaQuery.of(context).padding,
-          child: Padding(
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width / 50.0),
-            child: Feed(),
-          )),
+          //margin: MediaQuery.of(context).padding,
+          child: Feed()),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.create),
           onPressed: () => Navigator.of(context)
