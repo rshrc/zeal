@@ -20,8 +20,9 @@ class _FeedState extends State<Feed> {
             return ListView.builder(
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
+                  int adjIndex = (snapshot.data.documents.length - 1) - index;
                   return PostWidget(
-                      p: Post(ds: snapshot.data.documents[index]));
+                      p: Post(ds: snapshot.data.documents[adjIndex]));
                 });
         });
   }
