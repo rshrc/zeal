@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:funkrafte/data/app_data.dart';
 import 'package:funkrafte/data/post.dart';
 import 'package:funkrafte/ui/comments.dart';
+import 'package:photo_view/photo_view.dart';
 
 class PostWidget extends StatelessWidget {
   final Post p;
@@ -23,8 +24,14 @@ class PostWidget extends StatelessWidget {
             child: Stack(
               children: <Widget>[
                 Positioned.fill(
-                    child: CachedNetworkImage(
-                        imageUrl: p.imageUrl, fit: BoxFit.cover))
+                    child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ImageViewer(url: p.imageUrl)));
+                  },
+                  child: CachedNetworkImage(
+                      imageUrl: p.imageUrl, fit: BoxFit.cover),
+                ))
                 //child: Image.asset('assets/logo.png', fit: BoxFit.cover))
               ],
             ),
@@ -210,6 +217,40 @@ class _LikesAndCaptionState extends State<LikesAndCaption> {
           child: Text(widget.p.caption),
         ),
       ],
+    );
+  }
+}
+
+class ImageViewer extends StatefulWidget {
+  final String url;
+  ImageViewer({this.url});
+  @override
+  _ImageViewerState createState() => _ImageViewerState();
+}
+
+class _ImageViewerState extends State<ImageViewer> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: null,
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Container(
+              child: PhotoView(
+                  imageProvider: CachedNetworkImageProvider(widget.url),
+                  minScale: PhotoViewComputedScale.contained,
+                  maxScale: PhotoViewComputedScale.contained * 2.0)),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: AppBar(
+              backgroundColor: Colors.transparent,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
