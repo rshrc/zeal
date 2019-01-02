@@ -22,6 +22,7 @@ Future<bool> isLoggedIn() async {
 }
 
 Future signIn(Function action) async {
+  UserData().isAdmin = false;
   GoogleSignInAccount gSI = await _googleSignIn.signIn();
   GoogleSignInAuthentication gSA;
   try {
