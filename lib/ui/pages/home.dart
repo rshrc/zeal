@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:funkrafte/data/app_data.dart';
+import 'package:funkrafte/data/auth.dart';
+import 'package:funkrafte/main.dart';
 import 'package:funkrafte/ui/drawer_tabs/feed.dart';
 import 'package:funkrafte/ui/new_post.dart';
 
@@ -45,6 +47,19 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text('Buy now!'),
               onTap: () {
                 Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text('Logout'),
+              onTap: () {
+                Navigator.of(context).pop();
+                logoutUser().then((value) {
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) {
+                    return SplashScreen();
+                  }), (Route<dynamic> route) => false);
+                });
               },
             ),
             Divider(),

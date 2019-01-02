@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:funkrafte/data/app_data.dart';
 
+import 'data/auth.dart';
 import 'ui/buttons.dart';
 import 'ui/pages/home.dart';
 
@@ -110,8 +111,15 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
+    isLoggedIn().then((value) {
+      if (value) {
+        signIn(() {
+          print("Sign in Successful!\nWelcome to FunKrafte!");
+          Navigator.of(context).pushReplacementNamed('/home');
+        });
+      }
+    });
     var h = MediaQuery.of(context).size.height;
-
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
