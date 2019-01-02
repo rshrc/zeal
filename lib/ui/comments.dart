@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:funkrafte/data/app_data.dart';
 import 'package:funkrafte/data/post.dart';
 import 'package:funkrafte/ui/common.dart';
 import 'package:funkrafte/ui/post.dart';
@@ -33,7 +34,7 @@ class _CommentsState extends State<Comments> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          UserInfoRow(id: widget.p.uid),
+          UserInfoRow(id: widget.p.uid, p: widget.p),
           LikesAndCaption(p: widget.p),
           Divider(),
           Expanded(child: CommentsList(p: widget.p)),
@@ -58,9 +59,16 @@ class _CommentsListState extends State<CommentsList> {
     return ListView.builder(
         itemCount: widget.p.comments.length,
         itemBuilder: (context, index) {
+          int adjIndex = (widget.p.comments.length - 1) - index;
           return UserComment(
-              uid: widget.p.comments[postIdList[index]][0],
-              content: widget.p.comments[postIdList[index]][1]);
+              uid: widget.p.comments[postIdList[adjIndex]][0],
+              content: widget.p.comments[postIdList[adjIndex]][1],
+              delCb: () {
+                if (!UserData().isAdmin) return;
+                widget.p.comments.remove(postIdList[adjIndex]);
+                widget.p.serverUpdate();
+                setState(() {});
+              });
         });
   }
 }
@@ -68,8 +76,10 @@ class _CommentsListState extends State<CommentsList> {
 class UserComment extends StatefulWidget {
   final String uid;
   final String content;
+  final VoidCallback delCb;
 
-  UserComment({@required this.uid, @required this.content});
+  UserComment(
+      {@required this.uid, @required this.content, @required this.delCb});
 
   @override
   UserCommentState createState() {
@@ -120,30 +130,39 @@ class UserCommentState extends State<UserComment> {
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          imageUrl == null
-              ? CircularProgressIndicator()
-              : CircleAvatar(
-                  backgroundImage: CachedNetworkImageProvider(imageUrl)),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 2.0),
-                  child: Text(
-                    _userName,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
+          Row(
+            children: <Widget>[
+              imageUrl == null
+                  ? CircularProgressIndicator()
+                  : CircleAvatar(
+                      backgroundImage: CachedNetworkImageProvider(imageUrl)),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.0),
+                      child: Text(
+                        _userName,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.0),
+                      child: Text(widget.content),
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 2.0),
-                  child: Text(widget.content),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
+          FlatButton(
+            child: Icon(Icons.clear),
+            onPressed: widget.delCb,
+          )
         ],
       ),
     );

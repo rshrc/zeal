@@ -9,6 +9,7 @@ import 'ui/pages/home.dart';
 
 void main() {
   runApp(MaterialApp(
+    theme: ThemeData(primaryColor: Colors.red, accentColor: Colors.red),
     home: new SplashScreen(),
     routes: <String, WidgetBuilder>{
       '/login': (BuildContext context) => new AppWrapper(),

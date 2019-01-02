@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:funkrafte/data/app_data.dart';
 import 'package:funkrafte/data/post.dart';
 import 'package:funkrafte/ui/comments.dart';
 
@@ -15,7 +16,7 @@ class PostWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          UserInfoRow(id: p.uid),
+          UserInfoRow(id: p.uid, p: p),
           SizedBox(
             height: MediaQuery.of(context).size.width,
             width: MediaQuery.of(context).size.width,
@@ -37,7 +38,8 @@ class PostWidget extends StatelessWidget {
 
 class UserInfoRow extends StatefulWidget {
   final String id;
-  UserInfoRow({this.id});
+  final Post p;
+  UserInfoRow({@required this.id, @required this.p});
 
   @override
   UserInfoRowState createState() {
@@ -48,6 +50,7 @@ class UserInfoRow extends StatefulWidget {
 class UserInfoRowState extends State<UserInfoRow> {
   String imageUrl;
   String userName = "";
+  BuildContext mContext;
 
   Future<void> _getUserName() async {
     var name = await Firestore.instance
@@ -81,25 +84,50 @@ class UserInfoRowState extends State<UserInfoRow> {
     }
   }
 
+  void _select(int c) {
+    if (c == 0) {
+      widget.p.emailUser(context: mContext);
+    } else if (c == 1) {
+      widget.p.delete();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    mContext = context;
     _getUserImageUrl();
     _getUserName();
+    var menu = List<PopupMenuEntry<int>>();
+    menu.add(PopupMenuItem<int>(value: 0, child: Text("Email user")));
+    menu.add(PopupMenuItem<int>(value: 1, child: Text("Delete post")));
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          imageUrl == null
-              ? CircularProgressIndicator()
-              : CircleAvatar(
-                  backgroundImage: CachedNetworkImageProvider(imageUrl)),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: Text(
-              userName,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+          Row(
+            children: <Widget>[
+              imageUrl == null
+                  ? CircularProgressIndicator()
+                  : CircleAvatar(
+                      backgroundImage: CachedNetworkImageProvider(imageUrl)),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  userName,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
           ),
+          UserData().isAdmin
+              ? PopupMenuButton<int>(
+                  onSelected: _select,
+                  itemBuilder: (context) {
+                    return menu;
+                  },
+                )
+              : Container()
         ],
       ),
     );

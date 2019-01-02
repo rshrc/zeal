@@ -14,7 +14,9 @@ Future<void> updateUserDB() async {
         .where('id', isEqualTo: UserData().user.uid)
         .getDocuments();
     final List<DocumentSnapshot> documents = result.documents;
-    if (documents.length == 0) {
+    if (documents.length == 0 ||
+        documents.elementAt(0).data['email'] == null ||
+        documents.elementAt(0).data['isAdmin'] == null) {
       // Update data to server if new user
       Firestore.instance
           .collection('users')
@@ -22,10 +24,37 @@ Future<void> updateUserDB() async {
           .setData({
         'name': UserData().user.displayName,
         'photoUrl': UserData().user.photoUrl,
-        'id': UserData().user.uid
+        'id': UserData().user.uid,
+        'email': UserData().user.email,
+        'isAdmin': UserData().isAdmin,
       });
     }
   }
+}
+
+Future<void> registerForProduct() async {
+  bool _isRegistered = await isRegistered();
+  if (!_isRegistered) {
+    Firestore.instance
+        .collection('registered')
+        .document(UserData().user.uid)
+        .setData({
+      'name': UserData().user.displayName,
+      'photoUrl': UserData().user.photoUrl,
+      'id': UserData().user.uid,
+      'email': UserData().user.email,
+      'processed': false,
+    });
+  }
+}
+
+Future<bool> isRegistered() async {
+  final QuerySnapshot result = await Firestore.instance
+      .collection('registered')
+      .where('id', isEqualTo: UserData().user.uid)
+      .getDocuments();
+  final List<DocumentSnapshot> documents = result.documents;
+  return documents.length != 0;
 }
 
 Future<String> uploadImage(File imageFile) async {

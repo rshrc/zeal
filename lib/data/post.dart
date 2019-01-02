@@ -1,8 +1,12 @@
 import 'dart:collection';
+import 'dart:core';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:funkrafte/data/app_data.dart';
+import 'package:funkrafte/ui/common.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Post {
   /// Let's just avoid conflicts here :)
@@ -25,23 +29,25 @@ class Post {
   }
 
   String randomStringGen() {
-    return "${Random().nextInt(10000)}-${Random().nextInt(10000)}-${Random().nextInt(10000)}-${Random().nextInt(10000)}";
+    return "${Random().nextInt(10000)}-${Random().nextInt(10000)}";
   }
 
   void addComment(String comment) {
     List<String> currentComment = new List<String>();
     currentComment.add(currentUid);
     currentComment.add(comment);
-    comments[randomStringGen()] = currentComment;
+    var cKey = new DateTime.now().millisecondsSinceEpoch.toString() +
+        randomStringGen();
+    comments[cKey] = currentComment;
     serverUpdate();
   }
 
   void like() {
     if (likedBy == null) likedBy = new HashSet();
     liked = !liked;
-    // ignore: unnecessary_statements
     liked
         ? likedBy.add(currentUid)
+        // ignore: unnecessary_statements
         : likedBy.contains(currentUid) ? likedBy.remove(currentUid) : '';
     likes = likedBy.length;
     serverUpdate();
@@ -71,6 +77,39 @@ class Post {
     ds = await ref.get();
   }
 
+  Future<void> delete() async {
+    Firestore.instance.collection('posts').document(id).delete();
+  }
+
+  void emailUser({String subject = "", @required BuildContext context}) async {
+    String emailId = await Firestore.instance
+        .collection('users')
+        .where('id', isEqualTo: uid)
+        .getDocuments()
+        .then((result) => result.documents.elementAt(0)['email']);
+    if (emailId == null) {
+      if (context == null) {
+        throw ("Bad context and email in db is null!\nuid: $uid");
+      }
+      popupMenuBuilder(
+          context,
+          AlertDialog(
+            title: Text("Bad Email ID!"),
+            content: Text(
+                "This is usually caused due to an issue with the database or if the user in question is using an old version of the app."),
+          ),
+          dismiss: true);
+      return;
+    }
+
+    String url = 'mailto:$emailId?subject=$subject';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print('Could not perform email intent: $url');
+    }
+  }
+
   Future<void> loadFromDs() async {
     uid = ds['uid'];
     id = ds['id'];
@@ -79,7 +118,12 @@ class Post {
     likedBy = new Set.from(ds['likedBy']);
     likes = likedBy == null ? 0 : likedBy.length;
     setLiked();
-    comments = new Map.from(ds['comments']);
+    if (ds['comments'] == null) {
+      comments = new Map();
+      serverUpdate();
+    } else {
+      comments = new Map.from(ds['comments']);
+    }
   }
 
   void setLiked() {

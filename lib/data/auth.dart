@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -31,6 +32,19 @@ Future signIn(Function action) async {
       action();
       UserData().user = user;
       updateUserDB();
+      updateAdmin();
     });
   } catch (e) {}
+}
+
+Future<void> updateAdmin() async {
+  Firestore.instance
+      .collection('users')
+      .where('id', isEqualTo: UserData().user.uid)
+      .getDocuments()
+      .then((result) {
+    bool admin = result.documents.elementAt(0)['isAdmin'];
+    if (admin == null) admin = false;
+    UserData().isAdmin = admin;
+  });
 }

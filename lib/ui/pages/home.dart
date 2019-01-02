@@ -4,6 +4,8 @@ import 'package:funkrafte/data/app_data.dart';
 import 'package:funkrafte/data/auth.dart';
 import 'package:funkrafte/main.dart';
 import 'package:funkrafte/ui/common.dart';
+import 'package:funkrafte/ui/drawer_tabs/admin.dart';
+import 'package:funkrafte/ui/drawer_tabs/buy_now.dart';
 import 'package:funkrafte/ui/drawer_tabs/feed.dart';
 import 'package:funkrafte/ui/new_post.dart';
 
@@ -13,8 +15,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int _page = 0;
+
   @override
   Widget build(BuildContext context) {
+    updateAdmin().then((value) => setState(() {}));
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -28,25 +33,33 @@ class _HomeScreenState extends State<HomeScreen> {
               accountEmail: new Text(UserData().user.email),
               decoration: BoxDecoration(
                   color: Colors.black,
-                  image: DecorationImage(
-                    colorFilter: new ColorFilter.mode(
-                        Colors.black.withOpacity(0.75), BlendMode.dstATop),
-                    fit: BoxFit.fill,
-                    image: CachedNetworkImageProvider(
-                        "https://cdn.techjuice.pk/wp-content/uploads/2016/07/31.png"),
-                  )),
+                  gradient: LinearGradient(
+                      begin: FractionalOffset.bottomLeft,
+                      end: FractionalOffset.topRight,
+                      colors: [
+                        //Color(0xFF1a2a6c),
+                        Color(0xFFfe8c00),
+                        Color(0xFFf83600),
+                        Color(0xFFFF0000)
+                      ])),
             ),
             ListTile(
               leading: Icon(Icons.rss_feed),
               title: Text('Feed'),
               onTap: () {
+                setState(() {
+                  _page = 0;
+                });
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              leading: Icon(Icons.shopping_cart),
-              title: Text('Buy now!'),
+              leading: Icon(Icons.star),
+              title: Text('Register!'),
               onTap: () {
+                setState(() {
+                  _page = 1;
+                });
                 Navigator.pop(context);
               },
             ),
@@ -55,6 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text('Logout'),
               onTap: () {
                 Navigator.of(context).pop();
+                setState(() {
+                  UserData().isAdmin = false;
+                });
                 logoutUser().then((value) {
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) {
@@ -64,12 +80,27 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             Divider(),
+            UserData().isAdmin
+                ? ListTile(
+                    leading: Icon(Icons.person, color: Colors.red),
+                    title: Text(
+                      'Admin',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        _page = 2;
+                      });
+                      Navigator.pop(context);
+                    },
+                  )
+                : Container(),
             ListTile(
               leading: Icon(Icons.info),
               title: Text('About'),
               onTap: () {
                 Navigator.pop(context);
-                popupMenuBuilder(context, AboutAppDialog());
+                popupMenuBuilder(context, AboutAppDialog(), dismiss: true);
               },
             ),
           ],
@@ -77,7 +108,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Container(
           //margin: MediaQuery.of(context).padding,
-          child: Feed()),
+          child: _page == 0
+              ? Feed()
+              : _page == 1 ? BuyNow() : _page == 2 ? Admin() : Container()),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.create),
           onPressed: () => Navigator.of(context)

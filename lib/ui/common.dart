@@ -85,9 +85,10 @@ class AppHeader extends StatelessWidget {
   }
 }
 
-Future<Null> popupMenuBuilder(BuildContext context, Widget child) async {
+Future<Null> popupMenuBuilder(BuildContext context, Widget child,
+    {bool dismiss = false}) async {
   return showDialog<Null>(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: dismiss,
       builder: (BuildContext context) => child);
 }

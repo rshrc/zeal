@@ -4,6 +4,7 @@ class UserData {
   static final UserData _singleton = new UserData._internal();
 
   FirebaseUser user;
+  bool isAdmin = false;
 
   factory UserData() {
     return _singleton;
