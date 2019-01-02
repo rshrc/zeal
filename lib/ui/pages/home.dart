@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:funkrafte/data/app_data.dart';
 import 'package:funkrafte/data/auth.dart';
 import 'package:funkrafte/main.dart';
+import 'package:funkrafte/ui/common.dart';
 import 'package:funkrafte/ui/drawer_tabs/feed.dart';
 import 'package:funkrafte/ui/new_post.dart';
 
@@ -68,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text('About'),
               onTap: () {
                 Navigator.pop(context);
+                popupMenuBuilder(context, AboutAppDialog());
               },
             ),
           ],
@@ -96,6 +98,36 @@ class _HomeScreenState extends State<HomeScreen> {
             }),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AboutAppDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("About"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Image.asset('assets/logo.png'),
+          Text("Insert some info here"),
+          Padding(
+            padding: EdgeInsets.only(top: 8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text("Made with ",
+                    style: TextStyle(fontWeight: FontWeight.w300)),
+                Icon(Icons.favorite, color: Colors.red),
+                Text(" by ", style: TextStyle(fontWeight: FontWeight.w300)),
+                Text("Kshitij Gupta",
+                    style: TextStyle(fontWeight: FontWeight.w400))
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

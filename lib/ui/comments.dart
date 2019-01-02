@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:funkrafte/data/post.dart';
+import 'package:funkrafte/ui/common.dart';
 import 'package:funkrafte/ui/post.dart';
 
 class Comments extends StatefulWidget {
@@ -208,11 +209,4 @@ class _AddCommentPopupContentState extends State<AddCommentPopupContent> {
       ],
     );
   }
-}
-
-Future<Null> popupMenuBuilder(BuildContext context, Widget child) async {
-  return showDialog<Null>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) => child);
 }
