@@ -18,6 +18,7 @@ dependencies:
   image_picker: ^0.4.10
   url_launcher: ^4.0.3
   photo_view: any
+  camera: any
 
 dev_dependencies:
   flutter_test:

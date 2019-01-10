@@ -27,6 +27,26 @@ Future<void> updateUserDB() async {
         'id': UserData().user.uid,
         'email': UserData().user.email,
         'isAdmin': UserData().isAdmin,
+        'emotion': "NONE"
+      });
+    }
+  }
+}
+
+Future<void> updateEmotionDB(String emotionImURL) async {
+  if (emotionImURL != null) {
+    final QuerySnapshot result = await Firestore.instance
+        .collection('emotion')
+        .where('id', isEqualTo: UserData().user.uid)
+        .getDocuments();
+    final List<DocumentSnapshot> documents = result.documents;
+    if (documents.length == 0) {
+      Firestore.instance
+          .collection('emotion')
+          .document(UserData().user.uid)
+          .setData({
+        'uid': UserData().user.uid,
+        'photoUrl': emotionImURL,
       });
     }
   }
@@ -60,6 +80,14 @@ Future<bool> isRegistered() async {
 Future<String> uploadImage(File imageFile) async {
   String _fileName =
       "${new Random().nextInt(10000)}_${new Random().nextInt(10000)}_${new Random().nextInt(10000)}.jpg";
+  StorageReference ref =
+      FirebaseStorage.instance.ref().child("${UserData().user.uid}/$_fileName");
+  StorageUploadTask uploadTask = ref.putFile(imageFile);
+  return await (await uploadTask.onComplete).ref.getDownloadURL();
+}
+
+Future<String> uploadImageAs(File imageFile, String name) async {
+  String _fileName = name;
   StorageReference ref =
       FirebaseStorage.instance.ref().child("${UserData().user.uid}/$_fileName");
   StorageUploadTask uploadTask = ref.putFile(imageFile);

@@ -34,6 +34,7 @@ Future signIn(Function action) async {
       UserData().user = user;
       updateUserDB();
       updateAdmin();
+      updateEmotion();
     });
   } catch (e) {}
 }
@@ -47,5 +48,19 @@ Future<void> updateAdmin() async {
     bool admin = result.documents.elementAt(0)['isAdmin'];
     if (admin == null) admin = false;
     UserData().isAdmin = admin;
+  });
+}
+
+Future<void> updateEmotion() async {
+  Firestore.instance
+      .collection('users')
+      .where('id', isEqualTo: UserData().user.uid)
+      .getDocuments()
+      .then((result) {
+    String emo = result.documents.elementAt(0)['emotion'];
+    if (emo == "NONE")
+      UserData().emotion = null;
+    else
+      UserData().emotion = emo;
   });
 }

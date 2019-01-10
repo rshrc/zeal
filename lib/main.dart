@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:funkrafte/data/app_data.dart';
 
@@ -7,7 +8,8 @@ import 'data/auth.dart';
 import 'ui/buttons.dart';
 import 'ui/pages/home.dart';
 
-void main() {
+Future<void> main() async {
+  AppData().cameras = await availableCameras();
   runApp(MaterialApp(
     theme: ThemeData(primaryColor: Colors.red, accentColor: Colors.red),
     home: new SplashScreen(),

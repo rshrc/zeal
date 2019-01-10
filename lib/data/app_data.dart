@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserData {
@@ -5,6 +6,7 @@ class UserData {
 
   FirebaseUser user;
   bool isAdmin = false;
+  String emotion;
 
   factory UserData() {
     return _singleton;
@@ -16,6 +18,7 @@ class UserData {
 class AppData {
   static final AppData _singleton = new AppData._internal();
 
+  List<CameraDescription> cameras;
   double scaleFactorW = 0;
   double scaleFactorH = 0;
   double scaleFactorA = 0;

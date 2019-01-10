@@ -9,6 +9,8 @@ import 'package:funkrafte/ui/drawer_tabs/buy_now.dart';
 import 'package:funkrafte/ui/drawer_tabs/feed.dart';
 import 'package:funkrafte/ui/new_post.dart';
 
+import 'emotion.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -20,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     updateAdmin().then((value) => setState(() {}));
+    updateEmotion().then((value) => setState(() {}));
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -61,6 +64,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   _page = 1;
                 });
                 Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: UserData().emotion == null
+                  ? Icon(Icons.face)
+                  : Icon(Icons.tag_faces, color: Colors.blue),
+              title: UserData().emotion == null
+                  ? Text('Emotion')
+                  : Text(UserData().emotion,
+                      style: TextStyle(color: Colors.blue)),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => EmotionPage()));
               },
             ),
             ListTile(
