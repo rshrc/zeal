@@ -1,21 +1,15 @@
 from keras.models import load_model
-import numpy as np
-from statistics import mode
-import os
-import cv2
-import pandas as pd
 from sklearn.externals import joblib
-from flask_restful import reqparse, abort, Api, Resource
-from flask import Flask, jsonify, request
+from statistics import mode
 from utils import preprocess_input
-from firebase import firebase
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import storage
+import cv2
 import datetime
+import json
+import numpy as np
+import os
+import pandas as pd
 import urllib
 import urllib.request
-import json
 
 def getEmotion(img_url):
 
@@ -23,6 +17,7 @@ def getEmotion(img_url):
 
     detection_model_path = 'models/haarcascade_frontalface_default.xml'
     classification_model_path = 'models/simple_CNN.hdf5'
+
     emotion_labels = {0:'Angry',1:'Disgust',2:'Neutral',3:'Very Happy!',
                         4:'Sad',5:'Surprise',6:'Happy!'}
 

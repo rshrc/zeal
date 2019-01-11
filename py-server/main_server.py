@@ -1,30 +1,24 @@
-from keras.models import load_model
-import numpy as np
-from statistics import mode
-import os
-import cv2
-import pandas as pd
-from sklearn.externals import joblib
-from flask_restful import reqparse, abort, Api, Resource
-from flask import Flask, jsonify, request
-from utils import preprocess_input
-from firebase import firebase
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import storage
-import datetime
-import urllib
-import urllib.request
-import json
 from google.cloud import firestore
+from keras.models import load_model
 from server import getEmotion
+from sklearn.externals import joblib
+from statistics import mode
+from utils import preprocess_input
+import cv2
+import datetime
+import json
+import numpy as np
+import os
+import pandas as pd
 import signal
+import subprocess
 import sys
 import time
+import urllib
+import urllib.request
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "credentials.json"
 db = firestore.Client()
-# doc_ref = db.collection(u'emotion').document(u'2ZlyBDxOgmOMwP9RmtaUnb1tQ7q2')
-
 
 def signal_handler(sig, frame):
         print('Exiting!')
