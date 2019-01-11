@@ -8,6 +8,9 @@ import 'package:funkrafte/data/firebase.dart';
 import 'package:path_provider/path_provider.dart';
 
 class CameraWidget extends StatefulWidget {
+  final BuildContext pContext;
+  CameraWidget({@required this.pContext});
+
   @override
   _CameraWidgetState createState() {
     return _CameraWidgetState();
@@ -88,7 +91,7 @@ class _CameraWidgetState extends State<CameraWidget> {
                                             UserData().user.uid)
                                         .then(
                                             (value) => updateEmotionDB(value));
-                                    Navigator.of(context).pop();
+                                    Navigator.of(widget.pContext).pop();
                                   },
                                   child: Icon(Icons.check),
                                   backgroundColor: Colors.green,
@@ -100,10 +103,12 @@ class _CameraWidgetState extends State<CameraWidget> {
                               FloatingActionButton(
                                   heroTag: "discard",
                                   onPressed: () {
-                                    imageSnapped = false;
-                                    if (imagePath != null)
-                                      File(imagePath).deleteSync();
-                                    imagePath = null;
+                                    setState(() {
+                                      imageSnapped = false;
+                                      if (imagePath != null)
+                                        File(imagePath).deleteSync();
+                                      imagePath = null;
+                                    });
                                   },
                                   child: Icon(Icons.clear),
                                   backgroundColor: Colors.red,
@@ -217,7 +222,7 @@ class EmotionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: CameraWidget(),
+      home: CameraWidget(pContext: context),
     );
   }
 }

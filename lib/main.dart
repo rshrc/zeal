@@ -118,7 +118,9 @@ class _AppState extends State<App> {
       if (value) {
         signIn(() {
           print("Sign in Successful!\nWelcome to FunKrafte!");
-          Navigator.of(context).pushReplacementNamed('/home');
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+              settings: RouteSettings(name: '/home'),
+              builder: (context) => HomeScreen()));
         });
       }
     });
