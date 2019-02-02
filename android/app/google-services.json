@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "474883285712",
+    "firebase_url": "https://zeal-a4142.firebaseio.com",
+    "project_id": "zeal-a4142",
+    "storage_bucket": "zeal-a4142.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474883285712:android:04074993845c7e19",
+        "android_client_info": {
+          "package_name": "com.example.zeal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "474883285712-2c0uoo9ensn17kr1mgpqfgrgamcbkhsh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2ZzZy4m7Hg-hi3KYgNCnsSZFXEvk_i00"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
