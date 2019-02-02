@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:funkrafte/data/post.dart';
-import 'package:funkrafte/ui/post.dart';
+import 'package:zeal/data/post.dart';
+import 'package:zeal/ui/post.dart';
 
 class Feed extends StatefulWidget {
   @override

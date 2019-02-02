@@ -4,8 +4,8 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:funkrafte/data/app_data.dart';
-import 'package:funkrafte/ui/common.dart';
+import 'package:zeal/data/app_data.dart';
+import 'package:zeal/ui/common.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Post {
@@ -51,6 +51,14 @@ class Post {
         : likedBy.contains(currentUid) ? likedBy.remove(currentUid) : '';
     likes = likedBy.length;
     serverUpdate();
+  }
+
+  void share() {
+    if (UserData().user.uid != uid) {
+      id = "";
+      uid = UserData().user.uid;
+      publishDoc();
+    }
   }
 
   void serverUpdate() {

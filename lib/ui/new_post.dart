@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:funkrafte/data/app_data.dart';
-import 'package:funkrafte/data/firebase.dart';
-import 'package:funkrafte/data/post.dart';
+import 'package:zeal/data/app_data.dart';
+import 'package:zeal/data/firebase.dart';
+import 'package:zeal/data/post.dart';
 
 import 'buttons.dart';
 

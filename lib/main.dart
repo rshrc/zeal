@@ -1,17 +1,16 @@
 import 'dart:async';
+import 'dart:math' as math;
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:funkrafte/data/app_data.dart';
+import 'package:zeal/data/app_data.dart';
 
 import 'data/auth.dart';
 import 'ui/buttons.dart';
 import 'ui/pages/home.dart';
 
 Future<void> main() async {
-  AppData().cameras = await availableCameras();
   runApp(MaterialApp(
-    theme: ThemeData(primaryColor: Colors.red, accentColor: Colors.red),
+    theme: ThemeData(primaryColor: Colors.pink, accentColor: Colors.pink),
     home: new SplashScreen(),
     routes: <String, WidgetBuilder>{
       '/login': (BuildContext context) => new AppWrapper(),
@@ -129,19 +128,18 @@ class _AppState extends State<App> {
       fit: StackFit.expand,
       children: <Widget>[
         Positioned(
-          bottom: 0.0,
           child: new Opacity(
             opacity: 0.05,
             child: new Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
               child: new Transform.rotate(
-                angle: -(22 / 7) / 4.8,
-                alignment: Alignment.centerRight,
+                angle: -math.pi / 4.8,
+                alignment: Alignment.center,
                 child: new ClipPath(
                   //clipper: new BackgroundImageClipper(),
                   child: new Container(
-                    padding: const EdgeInsets.only(
-                        bottom: 20.0, right: 0.0, left: 60.0),
+//                    padding: const EdgeInsets.only(
+//                        bottom: 20.0, right: 0.0, left: 60.0),
                     child: new Image(
                         width: h / 2.0,
                         height: h / 2.0,

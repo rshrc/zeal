@@ -1,15 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:funkrafte/data/app_data.dart';
-import 'package:funkrafte/data/auth.dart';
-import 'package:funkrafte/main.dart';
-import 'package:funkrafte/ui/common.dart';
-import 'package:funkrafte/ui/drawer_tabs/admin.dart';
-import 'package:funkrafte/ui/drawer_tabs/buy_now.dart';
-import 'package:funkrafte/ui/drawer_tabs/feed.dart';
-import 'package:funkrafte/ui/new_post.dart';
-
-import 'emotion.dart';
+import 'package:zeal/data/app_data.dart';
+import 'package:zeal/data/auth.dart';
+import 'package:zeal/main.dart';
+import 'package:zeal/ui/common.dart';
+import 'package:zeal/ui/drawer_tabs/admin.dart';
+import 'package:zeal/ui/drawer_tabs/buy_now.dart';
+import 'package:zeal/ui/drawer_tabs/feed.dart';
+import 'package:zeal/ui/new_post.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -24,6 +22,18 @@ class _HomeScreenState extends State<HomeScreen> {
     updateAdmin().then((value) => setState(() {}));
     updateEmotion().then((value) => setState(() {}));
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Zeal",
+          style: TextStyle(fontFamily: "zeal", fontSize: 30.0),
+        ),
+        actions: <Widget>[
+          Transform.rotate(
+              angle: -22 / 7 / 4.8,
+              child: IconButton(onPressed: () {}, icon: Icon(Icons.send)))
+        ],
+        centerTitle: true,
+      ),
       drawer: Drawer(
         child: ListView(
           padding: const EdgeInsets.all(0.0),
@@ -64,19 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   _page = 1;
                 });
                 Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: UserData().emotion == null
-                  ? Icon(Icons.face)
-                  : Icon(Icons.tag_faces, color: Colors.blue),
-              title: UserData().emotion == null
-                  ? Text('Emotion')
-                  : Text(UserData().emotion,
-                      style: TextStyle(color: Colors.blue)),
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => EmotionPage()));
               },
             ),
             ListTile(
@@ -127,27 +124,43 @@ class _HomeScreenState extends State<HomeScreen> {
           child: _page == 0
               ? Feed()
               : _page == 1 ? BuyNow() : _page == 2 ? Admin() : Container()),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.create),
-          onPressed: () => Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => NewPost()))),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        notchMargin: 4.0,
-        child: new Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Builder(builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              );
-            }),
-          ],
-        ),
-      ),
+//      floatingActionButton: FloatingActionButton(
+//          child: Icon(Icons.create),
+//          onPressed: () => Navigator.of(context)
+//              .push(MaterialPageRoute(builder: (context) => NewPost()))),
+//      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomNavigationBar(currentIndex: 1, items: [
+        BottomNavigationBarItem(
+            title: Text("Home"),
+            icon: IconButton(
+              icon: Icon(Icons.home, color: Theme.of(context).accentColor),
+              onPressed: () {},
+            )),
+        BottomNavigationBarItem(
+            title: Text("People"),
+            icon: IconButton(
+              icon: Icon(Icons.group, color: Theme.of(context).accentColor),
+              onPressed: () {},
+            )),
+        BottomNavigationBarItem(
+            title: Text("New Post"),
+            icon: IconButton(
+              icon: Icon(Icons.add_circle_outline, color: Theme.of(context).accentColor),
+              onPressed: () {},
+            )),
+        BottomNavigationBarItem(
+            title: Text("Notification"),
+            icon: IconButton(
+              icon: Icon(Icons.notifications, color: Theme.of(context).accentColor),
+              onPressed: () {},
+            )),
+        BottomNavigationBarItem(
+            title: Text("Profile"),
+            icon: IconButton(
+              icon: Icon(Icons.person, color: Theme.of(context).accentColor),
+              onPressed: () {},
+            ))
+      ]),
     );
   }
 }

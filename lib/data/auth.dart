@@ -27,8 +27,11 @@ Future signIn(Function action) async {
   GoogleSignInAuthentication gSA;
   try {
     gSA = await gSI.authentication;
-    _auth
-        .signInWithGoogle(idToken: gSA.idToken, accessToken: gSA.accessToken)
+    final AuthCredential credential = GoogleAuthProvider.getCredential(
+      accessToken: gSA.accessToken,
+      idToken: gSA.idToken,
+    );
+    _auth.signInWithCredential(credential)
         .then((user) {
       action();
       UserData().user = user;

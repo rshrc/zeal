@@ -1,5 +1,5 @@
-import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class UserData {
   static final UserData _singleton = new UserData._internal();
@@ -18,7 +18,6 @@ class UserData {
 class AppData {
   static final AppData _singleton = new AppData._internal();
 
-  List<CameraDescription> cameras;
   double scaleFactorW = 0;
   double scaleFactorH = 0;
   double scaleFactorA = 0;
@@ -27,4 +26,15 @@ class AppData {
     return _singleton;
   }
   AppData._internal();
+}
+
+class GlobalColorScheme {
+  Color iconColor = Colors.pink;
+  static final GlobalColorScheme _singleton = new GlobalColorScheme._internal();
+
+  factory GlobalColorScheme() {
+    return _singleton;
+  }
+
+  GlobalColorScheme._internal();
 }

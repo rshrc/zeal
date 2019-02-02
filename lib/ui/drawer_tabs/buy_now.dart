@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:funkrafte/data/firebase.dart';
+import 'package:zeal/data/firebase.dart';
 
 class BuyNow extends StatefulWidget {
   @override

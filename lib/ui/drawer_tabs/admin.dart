@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:funkrafte/ui/common.dart';
+import 'package:zeal/ui/common.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Admin extends StatefulWidget {
