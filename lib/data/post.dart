@@ -53,6 +53,14 @@ class Post {
     serverUpdate();
   }
 
+  void share() {
+    if (UserData().user.uid != uid) {
+      id = "";
+      uid = UserData().user.uid;
+      publishDoc();
+    }
+  }
+
   void serverUpdate() {
     Firestore.instance
         .collection('posts')

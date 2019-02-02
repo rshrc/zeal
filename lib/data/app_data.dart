@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 class UserData {
   static final UserData _singleton = new UserData._internal();
@@ -25,4 +26,15 @@ class AppData {
     return _singleton;
   }
   AppData._internal();
+}
+
+class GlobalColorScheme {
+  Color iconColor = Colors.pink;
+  static final GlobalColorScheme _singleton = new GlobalColorScheme._internal();
+
+  factory GlobalColorScheme() {
+    return _singleton;
+  }
+
+  GlobalColorScheme._internal();
 }

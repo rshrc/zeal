@@ -46,6 +46,7 @@ class PostWidget extends StatelessWidget {
 class UserInfoRow extends StatefulWidget {
   final String id;
   final Post p;
+
   UserInfoRow({@required this.id, @required this.p});
 
   @override
@@ -143,6 +144,7 @@ class UserInfoRowState extends State<UserInfoRow> {
 
 class PostInfoBar extends StatefulWidget {
   final Post p;
+
   PostInfoBar(this.p);
 
   @override
@@ -181,6 +183,13 @@ class PostInfoBarState extends State<PostInfoBar> {
                   child: Icon(Icons.comment),
                 ),
               ),
+              GestureDetector(
+                onTap: () => widget.p.share(),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 8.0, left: 16.0, bottom: 8.0),
+                  child: Icon(Icons.share),
+                ),
+              ),
             ],
           ),
           LikesAndCaption(p: widget.p),
@@ -194,6 +203,7 @@ class LikesAndCaption extends StatefulWidget {
   final Post p;
 
   LikesAndCaption({this.p});
+
   @override
   _LikesAndCaptionState createState() => _LikesAndCaptionState();
 }
@@ -223,7 +233,9 @@ class _LikesAndCaptionState extends State<LikesAndCaption> {
 
 class ImageViewer extends StatefulWidget {
   final String url;
+
   ImageViewer({this.url});
+
   @override
   _ImageViewerState createState() => _ImageViewerState();
 }

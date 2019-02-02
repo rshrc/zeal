@@ -28,3 +28,8 @@ flutter:
   assets:
     - assets/logo.png
     - assets/glogo.png
+  fonts:
+    - family: zeal
+      fonts:
+        - asset: assets/fonts/zeal_font.otf
+
