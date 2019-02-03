@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:zeal/data/app_data.dart';
 
-class ProfilePage extends StatefulWidget {
+class OtherProfilePage extends StatefulWidget {
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _OtherProfilePageState createState() => _OtherProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _OtherProfilePageState extends State<OtherProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: CircleAvatar(
                             radius: 48.0,
                             backgroundImage:
-                                AssetImage("assets/sample_image.jpg")),
+                            AssetImage("assets/sample_image.jpg")),
                       ),
                     ),
                     Padding(
@@ -39,14 +39,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             children: <Widget>[
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
                                   // the values for the number of values and stuff
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
                                           "28",
@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
                                           "56",
@@ -84,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      MainAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
                                           "100",
@@ -106,12 +106,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ButtonTheme(
                                     // So that we can customize the button later
                                     minWidth: 200,
-
                                     child: RaisedButton(
                                       onPressed: () {},
-                                      child: Text("Edit Profile"),
-                                      color: Colors.white,
-                                      shape: OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
+                                      child: Text("Follow"),
+                                      color: Colors.blue,
                                     ),
                                   ),
                                   IconButton(
@@ -132,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   title: Text(
                     "Username",
                     style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                    TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text("Bio"),
                 )

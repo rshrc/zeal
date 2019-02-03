@@ -9,6 +9,7 @@ import 'ui/buttons.dart';
 import 'ui/pages/home.dart';
 import 'ui/pages/zeal_chat.dart';
 import 'ui/pages/chat_screen.dart';
+import 'package:zeal/ui/pages/others_profile_page.dart';
 
 Future<void> main() async {
   runApp(MaterialApp(
@@ -19,6 +20,7 @@ Future<void> main() async {
       '/home': (BuildContext context) => HomeScreen(),
       '/zeal_chat': (BuildContext context) => ZealChat(),
       '/chat_screen': (BuildContext context) => ChatScreen(),
+      '/other_profile': (BuildContext context) => OtherProfilePage(),
     },
   ));
 }

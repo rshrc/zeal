@@ -18,7 +18,7 @@ class _DiscoverPeoplePageState extends State<DiscoverPeoplePage> {
         children: List.generate(100, (index) {
           return GestureDetector(
             onTap: (){
-              Navigator.of(context).pushNamed("/profile");
+              Navigator.of(context).pushNamed("/other_profile");
             },
             child: Container(
               decoration: BoxDecoration(
@@ -40,7 +40,7 @@ class _DiscoverPeoplePageState extends State<DiscoverPeoplePage> {
                     color: Theme.of(context).primaryColor,
                     child: Text(
                       "Connect",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                 ],
