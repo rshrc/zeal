@@ -144,13 +144,13 @@ class _HomeScreenState extends State<HomeScreen> {
           canvasColor: Theme.of(context).primaryColor,
         ),
         child: BottomNavigationBar(
-            type: BottomNavigationBarType.shifting,
+            type: BottomNavigationBarType.fixed,
             currentIndex: _page,
             items: [
               BottomNavigationBarItem(
                   title: Container(),
                   icon: IconButton(
-                    icon: Icon(Icons.home),
+                    icon: Icon(Icons.home, color: Colors.black,),
                     onPressed: () {
                       setState(() {
                         _page = 0;
@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                   title: Container(),
                   icon: IconButton(
-                    icon: Icon(Icons.group),
+                    icon: Icon(Icons.group, color: Colors.black,),
                     onPressed: () {
                       _page = 1;
                     },
@@ -168,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                   title: Container(),
                   icon: IconButton(
-                    icon: Icon(Icons.notifications),
+                    icon: Icon(Icons.notifications, color: Colors.black,),
                     onPressed: () {
                       _page = 2;
                     },
@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                   title: Container(),
                   icon: IconButton(
-                    icon: Icon(Icons.person),
+                    icon: Icon(Icons.person, color: Colors.black,),
                     onPressed: () {
                       setState(() {
                         _page = 3;
