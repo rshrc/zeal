@@ -18,7 +18,7 @@ Future<void> main() async {
       '/login': (BuildContext context) => AppWrapper(),
       '/home': (BuildContext context) => HomeScreen(),
       '/zeal_chat': (BuildContext context) => ZealChat(),
-      '/chat_screen': (BuildContext context) => ChatScreen();
+      '/chat_screen': (BuildContext context) => ChatScreen(),
     },
   ));
 }
