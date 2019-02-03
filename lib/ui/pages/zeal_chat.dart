@@ -4,7 +4,7 @@ class ZealChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ChatScreen(),
+      body: ChatListScreen(),
       appBar: AppBar(
         title: Text(
           "Zeal Chat",
@@ -16,12 +16,12 @@ class ZealChat extends StatelessWidget {
   }
 }
 
-class ChatScreen extends StatefulWidget {
+class ChatListScreen extends StatefulWidget {
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  _ChatListScreenState createState() => _ChatListScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatListScreenState extends State<ChatListScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -44,6 +44,9 @@ class _ChatScreenState extends State<ChatScreen> {
         Icons.delete_outline,
         color: Colors.purple,
       ),
+      onTap: (){
+
+      },
     );
   }
 }
