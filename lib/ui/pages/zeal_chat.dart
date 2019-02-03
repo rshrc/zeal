@@ -44,8 +44,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
         Icons.delete_outline,
         color: Colors.purple,
       ),
-      onTap: (){
-
+      onTap: () {
+        Navigator.of(context).pushNamed("/chat_screen");
       },
     );
   }

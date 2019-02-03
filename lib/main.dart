@@ -12,7 +12,7 @@ import 'ui/pages/chat_screen.dart';
 
 Future<void> main() async {
   runApp(MaterialApp(
-    theme: ThemeData(primaryColor: Colors.pink, accentColor: Colors.pink),
+    theme: ThemeData(primaryColor: Colors.white, accentColor: Colors.white),
     home: SplashScreen(),
     routes: <String, WidgetBuilder>{
       '/login': (BuildContext context) => AppWrapper(),
@@ -54,28 +54,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var h = MediaQuery
-        .of(context)
-        .size
-        .height;
+    var h = MediaQuery.of(context).size.height;
 
     // Make our life a bit easier.
-    AppData().scaleFactorH = MediaQuery
-        .of(context)
-        .size
-        .height / 900;
-    AppData().scaleFactorW = MediaQuery
-        .of(context)
-        .size
-        .width / 450;
-    AppData().scaleFactorA = (MediaQuery
-        .of(context)
-        .size
-        .width *
-        MediaQuery
-            .of(context)
-            .size
-            .height) /
+    AppData().scaleFactorH = MediaQuery.of(context).size.height / 900;
+    AppData().scaleFactorW = MediaQuery.of(context).size.width / 450;
+    AppData().scaleFactorA = (MediaQuery.of(context).size.width *
+            MediaQuery.of(context).size.height) /
         (900 * 450);
 
     return Scaffold(
@@ -93,14 +78,14 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           Center(
               child: Hero(
-                tag: "logo",
-                child: Container(
-                  height: h / 3.75,
-                  child: Image.asset(
-                    'assets/logo.png',
-                  ),
-                ),
-              )),
+            tag: "logo",
+            child: Container(
+              height: h / 3.75,
+              child: Image.asset(
+                'assets/logo.png',
+              ),
+            ),
+          )),
         ],
       ),
     );
@@ -135,17 +120,14 @@ class _AppState extends State<App> {
     isLoggedIn().then((value) {
       if (value) {
         signIn(() {
-          print("Sign in Successful!\nWelcome to FunKrafte!");
+          print("Sign in Successful!\nWelcome to Zeal!");
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               settings: RouteSettings(name: '/home'),
               builder: (context) => HomeScreen()));
         });
       }
     });
-    var h = MediaQuery
-        .of(context)
-        .size
-        .height;
+    var h = MediaQuery.of(context).size.height;
     return Stack(
       fit: StackFit.expand,
       children: <Widget>[
