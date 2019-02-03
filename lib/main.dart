@@ -7,6 +7,7 @@ import 'package:zeal/data/app_data.dart';
 import 'data/auth.dart';
 import 'ui/buttons.dart';
 import 'ui/pages/home.dart';
+import 'ui/pages/zeal_chat.dart';
 
 Future<void> main() async {
   runApp(MaterialApp(
@@ -15,6 +16,7 @@ Future<void> main() async {
     routes: <String, WidgetBuilder>{
       '/login': (BuildContext context) => new AppWrapper(),
       '/home': (BuildContext context) => new HomeScreen(),
+      '/zeal_chat': (BuildContext context) => new ZealChat(),
     },
   ));
 }

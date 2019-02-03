@@ -29,8 +29,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: <Widget>[
           Transform.rotate(
-              angle: -22 / 7 / 4.8,
-              child: IconButton(onPressed: () {}, icon: Icon(Icons.send)))
+            angle: -22 / 7 / 4.8,
+            child: IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed('/zeal_chat');
+              },
+              icon: Icon(Icons.send),
+            ),
+          ),
         ],
         centerTitle: true,
       ),
