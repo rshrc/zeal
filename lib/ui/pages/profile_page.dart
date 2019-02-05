@@ -1,143 +1,168 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:zeal/data/app_data.dart';
+import 'package:zeal/data/user.dart';
 
 class ProfilePage extends StatefulWidget {
+  final User user;
+
+  ProfilePage({@required this.user});
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool isSelfProfile = false;
+  bool initialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.user.uid == UserData().user.uid)
+      Future.delayed(Duration(seconds: 1), () {
+        if (!mounted) return;
+        setState(() {
+          isSelfProfile = true;
+          initialized = true;
+        });
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
         children: <Widget>[
-          Container(
-            height: 200.0,
-            color: Colors.white,
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: CircleAvatar(
-                            radius: 48.0,
-                            backgroundImage:
-                                AssetImage("assets/sample_image.jpg")),
+          Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ClipRRect(
+                        //radius: 48.0,
+                        borderRadius: BorderRadius.circular(48.0),
+                        //backgroundImage: CachedNetworkImageProvider(
+                        //UserData().user.profileImage),
+                        child: CachedNetworkImage(
+                            imageUrl: UserData().user.profileImage,
+                            placeholder: CircularProgressIndicator()),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  // the values for the number of values and stuff
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          "28",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          "Following",
-                                          style: TextStyle(fontSize: 16.0),
-                                        ),
-                                      ],
-                                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        0.toString(),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "Posts",
+                                        style: TextStyle(fontSize: 16.0),
+                                      ),
+                                    ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          "56",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          "Followers",
-                                          style: TextStyle(fontSize: 16.0),
-                                        ),
-                                      ],
-                                    ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        widget.user.following.length.toString(),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "Following",
+                                        style: TextStyle(fontSize: 16.0),
+                                      ),
+                                    ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          "100",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          "Posts",
-                                          style: TextStyle(fontSize: 16.0),
-                                        ),
-                                      ],
-                                    ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        widget.user.followers.length.toString(),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "Followers",
+                                        style: TextStyle(fontSize: 16.0),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  ButtonTheme(
-                                    // So that we can customize the button later
-                                    minWidth: 200,
-
-                                    child: RaisedButton(
-                                      onPressed: () {},
-                                      child: Text("Edit Profile"),
-                                      color: Colors.white,
-                                      shape: OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
-                                    ),
-                                  ),
-                                  IconButton(
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                ButtonTheme(
+                                  // So that we can customize the button later
+                                  minWidth: 200,
+                                  child: RaisedButton(
+                                    //color: Colors.black,
                                     onPressed: () {},
-                                    icon: Icon(Icons.near_me),
-                                    tooltip: "Message",
+                                    child: Text("Edit Profile"),
+                                    color: Theme.of(context).primaryColor,
+                                    /*shape: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black)),*/
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.near_me),
+                                  tooltip: "Message",
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-                ListTile(
-                  title: Text(
-                    "Username",
-                    style:
-                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text("Bio"),
-                )
-              ],
-            ),
+                ],
+              ),
+              ListTile(
+                title: Text(
+                  UserData().user.name,
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                ),
+                subtitle: widget.user.bio == ""
+                    ? Text(
+                        "This user hasn't provided a bio",
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                      )
+                    : Text(widget.user.bio),
+              )
+            ],
           ),
           Expanded(
             child: GridView.count(
@@ -151,10 +176,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     Navigator.of(context).pushNamed("/profile");
                   },
                   child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
+                    child: Image.asset(
+                      "assets/dog_image.jpg",
+                      fit: BoxFit.cover,
                     ),
-                    child: Image.asset("assets/dog_image.jpg"),
                   ),
                 );
               }),

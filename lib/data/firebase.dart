@@ -14,18 +14,18 @@ Future<void> updateUserDB() async {
         .collection('users')
         .where('id', isEqualTo: UserData().fireUser.uid)
         .getDocuments();
+    final List<DocumentSnapshot> documents = result.documents;
     final currentUser = new User(
         uid: UserData().fireUser.uid,
         name: UserData().fireUser.displayName,
         profileImage: UserData().fireUser.photoUrl,
         email: UserData().fireUser.email,
         isAdmin: UserData().isAdmin,
-        friends: Set());
+        followers: Set(),
+        following: Set(),
+        bio: "");
     UserData().user = currentUser;
-    final List<DocumentSnapshot> documents = result.documents;
-    if (documents.length == 0 ||
-        documents.elementAt(0).data['email'] == null ||
-        documents.elementAt(0).data['isAdmin'] == null) {
+    if (documents.length == 0) {
       // Update data to server if new user
       Firestore.instance
           .collection('users')
@@ -35,7 +35,10 @@ Future<void> updateUserDB() async {
         'photoUrl': UserData().user.profileImage,
         'id': UserData().user.uid,
         'email': UserData().user.email,
-        'isAdmin': UserData().user.isAdmin
+        'isAdmin': UserData().user.isAdmin,
+        'followers': List(),
+        'following': List(),
+        'bio': ""
       });
     }
   }

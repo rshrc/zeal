@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zeal/data/app_data.dart';
 import 'package:zeal/data/auth.dart';
 import 'package:zeal/ui/drawer_tabs/feed.dart';
 import 'package:zeal/ui/pages/discover_people.dart';
@@ -44,7 +45,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? DiscoverPeoplePage()
                   : _page == 2
                       ? NotificationPage()
-                      : _page == 3 ? ProfilePage() : Container()),
+                      : _page == 3
+                          ? ProfilePage(
+                              user: UserData().user,
+                            )
+                          : Container()),
       bottomNavigationBar: Theme(
         data: ThemeData(
           canvasColor: Theme.of(context).primaryColor,

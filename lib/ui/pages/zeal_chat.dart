@@ -7,10 +7,8 @@ class ZealChat extends StatelessWidget {
       body: ChatListScreen(),
       appBar: AppBar(
         title: Text(
-          "Zeal Chat",
-          style: TextStyle(fontFamily: "zeal", fontSize: 32.0),
+          "Direct",
         ),
-        centerTitle: true,
       ),
     );
   }

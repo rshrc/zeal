@@ -34,7 +34,8 @@ Future signIn(Function action) async {
     _auth.signInWithCredential(credential).then((user) {
       action();
       UserData().fireUser = user;
-      updateUserDB().then((v) => updateAdmin());
+      updateUserDB();
+      updateAdmin();
     });
   } catch (e) {}
 }

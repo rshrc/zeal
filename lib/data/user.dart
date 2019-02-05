@@ -7,18 +7,23 @@ class User {
       this.email,
       this.name,
       this.profileImage,
-      this.friends,
+      this.followers,
+      this.following,
+      this.bio,
       this.isAdmin}) {
     _fetchUser(uid);
-    if (friends == null) friends = new Set();
+    if (followers == null) followers = new Set();
+    if (following == null) following = new Set();
     _serverUpdate();
   }
 
   String uid;
   String email;
   String name;
+  String bio;
   String profileImage;
-  Set<String> friends;
+  Set<String> followers;
+  Set<String> following;
   bool isAdmin = false;
 
   void _fetchUser(String uid) {
@@ -32,17 +37,19 @@ class User {
       email = result.documents.elementAt(0)['email'];
       profileImage = result.documents.elementAt(0)['photoUrl'];
       isAdmin = result.documents.elementAt(0)['isAdmin'];
-      friends = new Set.from(result.documents.elementAt(0)['friends']);
+      following = new Set.from(result.documents.elementAt(0)['following']);
+      followers = new Set.from(result.documents.elementAt(0)['followers']);
+      bio = result.documents.elementAt(0)['bio'];
     });
   }
 
-  void delFriend(String uid) {
-    friends.removeWhere((t) => t == uid);
+  void follow(String uid) {
+    followers.removeWhere((t) => t == uid);
     _serverUpdate();
   }
 
-  void addFriend(String uid) {
-    friends.add(uid);
+  void unfollow(String uid) {
+    followers.add(uid);
   }
 
   Map<String, dynamic> toJson() => {
@@ -50,8 +57,10 @@ class User {
         'email': email,
         'name': name,
         'photoUrl': profileImage,
-        'friends': friends.toList(),
-        'isAdmin': isAdmin
+        'followers': followers.toList(),
+        'following': following.toList(),
+        'isAdmin': isAdmin,
+        'bio': bio
       };
 
   void _serverUpdate() {
