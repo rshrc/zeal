@@ -6,13 +6,21 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'app_data.dart';
+import 'user.dart';
 
 Future<void> updateUserDB() async {
   if (UserData().user != null) {
     final QuerySnapshot result = await Firestore.instance
         .collection('users')
-        .where('id', isEqualTo: UserData().user.uid)
+        .where('id', isEqualTo: UserData().fireUser.uid)
         .getDocuments();
+    final currentUser = new User(
+        uid: UserData().fireUser.uid,
+        name: UserData().fireUser.displayName,
+        profileImage: UserData().fireUser.photoUrl,
+        email: UserData().fireUser.email,
+        isAdmin: UserData().isAdmin);
+    UserData().user = currentUser;
     final List<DocumentSnapshot> documents = result.documents;
     if (documents.length == 0 ||
         documents.elementAt(0).data['email'] == null ||
@@ -22,12 +30,11 @@ Future<void> updateUserDB() async {
           .collection('users')
           .document(UserData().user.uid)
           .setData({
-        'name': UserData().user.displayName,
-        'photoUrl': UserData().user.photoUrl,
+        'name': UserData().user.name,
+        'photoUrl': UserData().user.profileImage,
         'id': UserData().user.uid,
         'email': UserData().user.email,
-        'isAdmin': UserData().isAdmin,
-        'emotion': "NONE"
+        'isAdmin': UserData().user.isAdmin
       });
     }
   }
@@ -59,8 +66,8 @@ Future<void> registerForProduct() async {
         .collection('registered')
         .document(UserData().user.uid)
         .setData({
-      'name': UserData().user.displayName,
-      'photoUrl': UserData().user.photoUrl,
+      'name': UserData().user.name,
+      'photoUrl': UserData().user.profileImage,
       'id': UserData().user.uid,
       'email': UserData().user.email,
       'processed': false,

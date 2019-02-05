@@ -7,7 +7,6 @@ import 'package:zeal/ui/common.dart';
 import 'package:zeal/ui/drawer_tabs/admin.dart';
 import 'package:zeal/ui/drawer_tabs/buy_now.dart';
 import 'package:zeal/ui/drawer_tabs/feed.dart';
-import 'package:zeal/ui/new_post.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     updateAdmin().then((value) => setState(() {}));
-    updateEmotion().then((value) => setState(() {}));
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -41,8 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
             new UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
                   backgroundImage:
-                      CachedNetworkImageProvider(UserData().user.photoUrl)),
-              accountName: new Text(UserData().user.displayName),
+                      CachedNetworkImageProvider(UserData().user.profileImage)),
+              accountName: new Text(UserData().user.name),
               accountEmail: new Text(UserData().user.email),
               decoration: BoxDecoration(
                   color: Colors.black,
@@ -145,13 +143,15 @@ class _HomeScreenState extends State<HomeScreen> {
         BottomNavigationBarItem(
             title: Text("New Post"),
             icon: IconButton(
-              icon: Icon(Icons.add_circle_outline, color: Theme.of(context).accentColor),
+              icon: Icon(Icons.add_circle_outline,
+                  color: Theme.of(context).accentColor),
               onPressed: () {},
             )),
         BottomNavigationBarItem(
             title: Text("Notification"),
             icon: IconButton(
-              icon: Icon(Icons.notifications, color: Theme.of(context).accentColor),
+              icon: Icon(Icons.notifications,
+                  color: Theme.of(context).accentColor),
               onPressed: () {},
             )),
         BottomNavigationBarItem(
