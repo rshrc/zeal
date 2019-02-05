@@ -36,91 +36,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         centerTitle: true,
       ),
-//      drawer: Drawer(
-//        child: ListView(
-//          padding: const EdgeInsets.all(0.0),
-//          children: <Widget>[
-//            new UserAccountsDrawerHeader(
-//              currentAccountPicture: CircleAvatar(
-//                  backgroundImage:
-//                      CachedNetworkImageProvider(UserData().user.profileImage)),
-//              accountName: new Text(UserData().user.name),
-//              accountEmail: new Text(UserData().user.email),
-//              decoration: BoxDecoration(
-//                  color: Colors.black,
-//                  gradient: LinearGradient(
-//                      begin: FractionalOffset.bottomLeft,
-//                      end: FractionalOffset.topRight,
-//                      colors: [
-//                        //Color(0xFF1a2a6c),
-//                        Color(0xFFfe8c00),
-//                        Color(0xFFf83600),
-//                        Color(0xFFFF0000)
-//                      ])),
-//            ),
-//            ListTile(
-//              leading: Icon(Icons.rss_feed),
-//              title: Text('Feed'),
-//              onTap: () {
-//                setState(() {
-//                  _page = 0;
-//                });
-//                Navigator.pop(context);
-//              },
-//            ),
-//            ListTile(
-//              leading: Icon(Icons.star),
-//              title: Text('Register!'),
-//              onTap: () {
-//                setState(() {
-//                  _page = 1;
-//                });
-//                Navigator.pop(context);
-//              },
-//            ),
-//            ListTile(
-//              leading: Icon(Icons.exit_to_app),
-//              title: Text('Logout'),
-//              onTap: () {
-//                Navigator.of(context).pop();
-//                setState(() {
-//                  UserData().isAdmin = false;
-//                });
-//                logoutUser().then((value) {
-//                  Navigator.of(context).pushAndRemoveUntil(
-//                      MaterialPageRoute(builder: (context) {
-//                    return SplashScreen();
-//                  }), (Route<dynamic> route) => false);
-//                });
-//              },
-//            ),
-//            Divider(),
-//            UserData().isAdmin
-//                ? ListTile(
-//                    leading: Icon(Icons.person, color: Colors.red),
-//                    title: Text(
-//                      'Admin',
-//                      style: TextStyle(color: Colors.red),
-//                    ),
-//                    onTap: () {
-//                      setState(() {
-//                        _page = 2;
-//                      });
-//                      Navigator.pop(context);
-//                    },
-//                  )
-//                : Container(),
-//            ListTile(
-//              leading: Icon(Icons.info),
-//              title: Text('About'),
-//              onTap: () {
-//                Navigator.pop(context);
-//                popupMenuBuilder(context, AboutAppDialog(), dismiss: true);
-//              },
-//            ),
-//          ],
-//        ),
-//      ),
       body: Container(
           //margin: MediaQuery.of(context).padding,
           child: _page == 0
@@ -130,11 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   : _page == 2
                       ? NotificationPage()
                       : _page == 3 ? ProfilePage() : Container()),
-//      floatingActionButton: FloatingActionButton(
-//          child: Icon(Icons.create),
-//          onPressed: () => Navigator.of(context)
-//              .push(MaterialPageRoute(builder: (context) => NewPost()))),
-//      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Theme(
         data: ThemeData(
           canvasColor: Theme.of(context).primaryColor,
@@ -201,14 +111,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ))
             ]),
       ),
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(
-          Icons.add_circle_outline,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      */
     );
   }
 }
