@@ -7,14 +7,20 @@ import 'package:zeal/data/app_data.dart';
 import 'data/auth.dart';
 import 'ui/buttons.dart';
 import 'ui/pages/home.dart';
+import 'ui/pages/zeal_chat.dart';
+import 'ui/pages/chat_screen.dart';
+import 'package:zeal/ui/pages/others_profile_page.dart';
 
 Future<void> main() async {
   runApp(MaterialApp(
-    theme: ThemeData(primaryColor: Colors.pink, accentColor: Colors.pink),
-    home: new SplashScreen(),
+    theme: ThemeData(primaryColor: Colors.white, accentColor: Colors.white),
+    home: SplashScreen(),
     routes: <String, WidgetBuilder>{
-      '/login': (BuildContext context) => new AppWrapper(),
-      '/home': (BuildContext context) => new HomeScreen(),
+      '/login': (BuildContext context) => AppWrapper(),
+      '/home': (BuildContext context) => HomeScreen(),
+      '/zeal_chat': (BuildContext context) => ZealChat(),
+      '/chat_screen': (BuildContext context) => ChatScreen(),
+      '/other_profile': (BuildContext context) => OtherProfilePage(),
     },
   ));
 }
@@ -26,8 +32,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   startTime() async {
-    var _duration = new Duration(seconds: 2);
-    return new Timer(_duration, navigationPage);
+    var _duration = Duration(seconds: 2);
+    return Timer(_duration, navigationPage);
   }
 
   void navigationPage() {
@@ -64,15 +70,15 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          new Container(
-            decoration: new BoxDecoration(
-                gradient: new LinearGradient(
+          Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
                     colors: [Colors.white, Colors.white],
                     begin: FractionalOffset.topRight,
                     end: FractionalOffset.bottomLeft,
                     tileMode: TileMode.clamp)),
           ),
-          new Center(
+          Center(
               child: Hero(
             tag: "logo",
             child: Container(
@@ -91,16 +97,16 @@ class _SplashScreenState extends State<SplashScreen> {
 class AppWrapper extends StatefulWidget {
   @override
   AppWrapperState createState() {
-    return new AppWrapperState();
+    return AppWrapperState();
   }
 }
 
 class AppWrapperState extends State<AppWrapper> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       appBar: null,
-      body: new App(),
+      body: App(),
     );
   }
 }
@@ -116,7 +122,7 @@ class _AppState extends State<App> {
     isLoggedIn().then((value) {
       if (value) {
         signIn(() {
-          print("Sign in Successful!\nWelcome to FunKrafte!");
+          print("Sign in Successful!\nWelcome to Zeal!");
           Navigator.of(context).pushReplacement(MaterialPageRoute(
               settings: RouteSettings(name: '/home'),
               builder: (context) => HomeScreen()));
@@ -128,19 +134,19 @@ class _AppState extends State<App> {
       fit: StackFit.expand,
       children: <Widget>[
         Positioned(
-          child: new Opacity(
+          child: Opacity(
             opacity: 0.05,
-            child: new Align(
+            child: Align(
               alignment: Alignment.center,
-              child: new Transform.rotate(
+              child: Transform.rotate(
                 angle: -math.pi / 4.8,
                 alignment: Alignment.center,
-                child: new ClipPath(
-                  //clipper: new BackgroundImageClipper(),
-                  child: new Container(
+                child: ClipPath(
+                  //clipper:  BackgroundImageClipper(),
+                  child: Container(
 //                    padding: const EdgeInsets.only(
 //                        bottom: 20.0, right: 0.0, left: 60.0),
-                    child: new Image(
+                    child: Image(
                         width: h / 2.0,
                         height: h / 2.0,
                         image: AssetImage('assets/logo.png')),
