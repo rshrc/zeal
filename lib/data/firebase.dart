@@ -19,7 +19,8 @@ Future<void> updateUserDB() async {
         name: UserData().fireUser.displayName,
         profileImage: UserData().fireUser.photoUrl,
         email: UserData().fireUser.email,
-        isAdmin: UserData().isAdmin);
+        isAdmin: UserData().isAdmin,
+        friends: Set());
     UserData().user = currentUser;
     final List<DocumentSnapshot> documents = result.documents;
     if (documents.length == 0 ||

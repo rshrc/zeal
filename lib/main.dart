@@ -3,17 +3,32 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:zeal/data/app_data.dart';
+import 'package:zeal/ui/pages/others_profile_page.dart';
 
 import 'data/auth.dart';
 import 'ui/buttons.dart';
+import 'ui/pages/chat_screen.dart';
 import 'ui/pages/home.dart';
 import 'ui/pages/zeal_chat.dart';
-import 'ui/pages/chat_screen.dart';
-import 'package:zeal/ui/pages/others_profile_page.dart';
 
 Future<void> main() async {
   runApp(MaterialApp(
-    theme: ThemeData(primaryColor: Colors.white, accentColor: Colors.white),
+    theme: ThemeData(
+      primarySwatch: MaterialColor(0xFFFFFFFF, const <int, Color>{
+        50: const Color(0xFFFFFFFF),
+        100: const Color(0xFFFFFFFF),
+        200: const Color(0xFFFFFFFF),
+        300: const Color(0xFFFFFFFF),
+        400: const Color(0xFFFFFFFF),
+        500: const Color(0xFFFFFFFF),
+        600: const Color(0xFFFFFFFF),
+        700: const Color(0xFFFFFFFF),
+        800: const Color(0xFFFFFFFF),
+        900: const Color(0xFFFFFFFF)
+      }),
+      accentColor: Colors.white,
+      brightness: Brightness.dark,
+    ),
     home: SplashScreen(),
     routes: <String, WidgetBuilder>{
       '/login': (BuildContext context) => AppWrapper(),

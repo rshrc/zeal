@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
     updateAdmin().then((value) => setState(() {}));
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.add), onPressed: () {}),
         title: Text(
           "Zeal",
           style: TextStyle(fontFamily: "zeal", fontSize: 30.0),
@@ -145,10 +146,12 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                   title: Container(),
                   icon: IconButton(
-                    icon: Icon(
-                      Icons.home,
-                      color: Colors.black,
-                    ),
+                    icon: Icon(Icons.home,
+                        color: _page != 0
+                            ? Theme.of(context).disabledColor
+                            : Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black),
                     onPressed: () {
                       setState(() {
                         _page = 0;
@@ -158,10 +161,12 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                   title: Container(),
                   icon: IconButton(
-                    icon: Icon(
-                      Icons.group,
-                      color: Colors.black,
-                    ),
+                    icon: Icon(Icons.group,
+                        color: _page != 1
+                            ? Theme.of(context).disabledColor
+                            : Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black),
                     onPressed: () {
                       _page = 1;
                     },
@@ -169,10 +174,12 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                   title: Container(),
                   icon: IconButton(
-                    icon: Icon(
-                      Icons.notifications,
-                      color: Colors.black,
-                    ),
+                    icon: Icon(Icons.notifications,
+                        color: _page != 2
+                            ? Theme.of(context).disabledColor
+                            : Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black),
                     onPressed: () {
                       _page = 2;
                     },
@@ -180,10 +187,12 @@ class _HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                   title: Container(),
                   icon: IconButton(
-                    icon: Icon(
-                      Icons.person,
-                      color: Colors.black,
-                    ),
+                    icon: Icon(Icons.person,
+                        color: _page != 3
+                            ? Theme.of(context).disabledColor
+                            : Theme.of(context).brightness == Brightness.dark
+                                ? Colors.white
+                                : Colors.black),
                     onPressed: () {
                       setState(() {
                         _page = 3;
@@ -192,13 +201,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ))
             ]),
       ),
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Icon(
           Icons.add_circle_outline,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      */
     );
   }
 }
