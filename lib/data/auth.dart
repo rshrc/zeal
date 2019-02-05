@@ -34,20 +34,24 @@ Future signIn(Function action) async {
     _auth.signInWithCredential(credential).then((user) {
       action();
       UserData().fireUser = user;
-      updateUserDB();
-      updateAdmin();
+      updateUserDB().then((v) => updateAdmin());
     });
   } catch (e) {}
 }
 
 Future<void> updateAdmin() async {
+  if (UserData().user == null) await updateUserDB();
   Firestore.instance
       .collection('users')
       .where('id', isEqualTo: UserData().user.uid)
       .getDocuments()
       .then((result) {
-    bool admin = result.documents.elementAt(0)['isAdmin'];
-    if (admin == null) admin = false;
-    UserData().isAdmin = admin;
+    if (result.documents.length > 0) {
+      bool admin = result.documents.elementAt(0)['isAdmin'];
+      if (admin == null) admin = false;
+      UserData().isAdmin = admin;
+    } else {
+      UserData().isAdmin = false;
+    }
   });
 }

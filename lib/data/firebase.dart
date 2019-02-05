@@ -9,7 +9,7 @@ import 'app_data.dart';
 import 'user.dart';
 
 Future<void> updateUserDB() async {
-  if (UserData().user != null) {
+  if (UserData().fireUser != null) {
     final QuerySnapshot result = await Firestore.instance
         .collection('users')
         .where('id', isEqualTo: UserData().fireUser.uid)

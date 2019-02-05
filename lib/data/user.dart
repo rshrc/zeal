@@ -10,6 +10,8 @@ class User {
       this.friends,
       this.isAdmin}) {
     _fetchUser(uid);
+    if (friends == null) friends = new Set();
+    _serverUpdate();
   }
 
   String uid;
@@ -53,6 +55,7 @@ class User {
       };
 
   void _serverUpdate() {
-    Firestore.instance.collection('users').document(uid).setData(toJson());
+    if (uid != null && uid != "")
+      Firestore.instance.collection('users').document(uid).setData(toJson());
   }
 }
