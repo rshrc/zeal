@@ -13,7 +13,8 @@ Future<void> updateUserDB() async {
     final QuerySnapshot result = await Firestore.instance
         .collection('users')
         .where('id', isEqualTo: UserData().fireUser.uid)
-        .getDocuments();
+        .getDocuments()
+        .then((v) => v);
     final List<DocumentSnapshot> documents = result.documents;
     final currentUser = new User(
         uid: UserData().fireUser.uid,
