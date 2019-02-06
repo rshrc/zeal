@@ -27,6 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: <Widget>[
           Transform.rotate(
             angle: -22 / 7 / 4.8,
+
+            /// The Message Button takes you to the Chat Screen
             child: IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('/zeal_chat');
@@ -39,6 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Container(
           //margin: MediaQuery.of(context).padding,
+          /// page 0, Feed (Home Page)
+          /// page 1, Discover People
+          /// page 2, Notification Page
+          /// page 3, Profile Page
           child: _page == 0
               ? Feed()
               : _page == 1

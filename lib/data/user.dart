@@ -10,7 +10,8 @@ class User {
       this.followers,
       this.following,
       this.bio,
-      this.isAdmin}) {
+      this.isAdmin,
+      this.hobbies}) {
     _fetchUser(uid);
     if (followers == null) followers = new Set();
     if (following == null) following = new Set();
@@ -24,6 +25,7 @@ class User {
   String profileImage;
   Set<String> followers;
   Set<String> following;
+  Set<String> hobbies;
   bool isAdmin = false;
 
   void _fetchUser(String uid) {
@@ -40,6 +42,7 @@ class User {
       following = new Set.from(result.documents.elementAt(0)['following']);
       followers = new Set.from(result.documents.elementAt(0)['followers']);
       bio = result.documents.elementAt(0)['bio'];
+      hobbies = new Set.from(result.documents.elementAt(0)['hobbies']);
     });
   }
 
@@ -52,6 +55,14 @@ class User {
     followers.add(uid);
   }
 
+  void addHobby(String hobby) {
+    hobbies.add(hobby);
+  }
+
+  void removeHobby(String hobby) {
+    hobbies.remove(hobby);
+  }
+
   Map<String, dynamic> toJson() => {
         "uid": uid,
         'email': email,
@@ -60,7 +71,8 @@ class User {
         'followers': followers.toList(),
         'following': following.toList(),
         'isAdmin': isAdmin,
-        'bio': bio
+        'bio': bio,
+        'hobbies': hobbies,
       };
 
   void _serverUpdate() {
