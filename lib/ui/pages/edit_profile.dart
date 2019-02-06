@@ -50,22 +50,46 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: ButtonTheme(
-                shape: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Colors.black,
-                )),
-                buttonColor: Colors.grey,
-                child: RaisedButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Zeal It!",
-                    style: TextStyle(color: Colors.white),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: ButtonTheme(
+                    shape: OutlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Colors.black,
+                    )),
+                    buttonColor: Colors.grey,
+                    child: RaisedButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Zeal It!",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: ButtonTheme(
+                    shape: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.black,
+                        )),
+                    buttonColor: Colors.grey,
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        "Go Back",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
