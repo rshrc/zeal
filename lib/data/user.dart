@@ -13,8 +13,9 @@ class User {
       this.isAdmin,
       this.hobbies}) {
     _fetchUser(uid);
-    if (followers == null) followers = new Set();
-    if (following == null) following = new Set();
+    if (followers == null) followers = Set();
+    if (following == null) following = Set();
+    if (hobbies == null) hobbies = Set();
     _serverUpdate();
   }
 
@@ -39,10 +40,10 @@ class User {
       email = result.documents.elementAt(0)['email'];
       profileImage = result.documents.elementAt(0)['photoUrl'];
       isAdmin = result.documents.elementAt(0)['isAdmin'];
-      following = new Set.from(result.documents.elementAt(0)['following']);
-      followers = new Set.from(result.documents.elementAt(0)['followers']);
+      following = Set.from(result.documents.elementAt(0)['following']);
+      followers = Set.from(result.documents.elementAt(0)['followers']);
       bio = result.documents.elementAt(0)['bio'];
-      hobbies = new Set.from(result.documents.elementAt(0)['hobbies']);
+      hobbies = Set.from(result.documents.elementAt(0)['hobbies']);
     });
   }
 

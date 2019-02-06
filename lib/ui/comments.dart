@@ -8,7 +8,9 @@ import 'package:zeal/ui/post.dart';
 
 class Comments extends StatefulWidget {
   final Post p;
+
   Comments({this.p});
+
   @override
   _CommentsState createState() => _CommentsState();
 }
@@ -46,16 +48,19 @@ class _CommentsState extends State<Comments> {
 
 class CommentsList extends StatefulWidget {
   final Post p;
+
   CommentsList({@required this.p});
+
   @override
   _CommentsListState createState() => _CommentsListState();
 }
 
 class _CommentsListState extends State<CommentsList> {
   List postIdList;
+
   @override
   Widget build(BuildContext context) {
-    postIdList = new List.from(widget.p.comments.keys);
+    postIdList = List.from(widget.p.comments.keys);
     return ListView.builder(
         itemCount: widget.p.comments.length,
         itemBuilder: (context, index) {
@@ -83,7 +88,7 @@ class UserComment extends StatefulWidget {
 
   @override
   UserCommentState createState() {
-    return new UserCommentState();
+    return UserCommentState();
   }
 }
 
@@ -171,7 +176,9 @@ class UserCommentState extends State<UserComment> {
 
 class AddCommentPopupContent extends StatefulWidget {
   final Post p;
+
   AddCommentPopupContent({@required this.p});
+
   @override
   _AddCommentPopupContentState createState() => _AddCommentPopupContentState();
 }
@@ -179,10 +186,11 @@ class AddCommentPopupContent extends StatefulWidget {
 class _AddCommentPopupContentState extends State<AddCommentPopupContent> {
   final _formKey = GlobalKey<FormState>();
   String _input;
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("New Comment"),
+      title: Text(" Comment"),
       content: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -191,7 +199,7 @@ class _AddCommentPopupContentState extends State<AddCommentPopupContent> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  new TextFormField(
+                  TextFormField(
                       decoration: InputDecoration(
                         hintText: "Comment",
                       ),
@@ -210,14 +218,14 @@ class _AddCommentPopupContentState extends State<AddCommentPopupContent> {
         ),
       ),
       actions: <Widget>[
-        new FlatButton(
-          child: new Text('Cancel'),
+        FlatButton(
+          child: Text('Cancel'),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
-        new FlatButton(
-          child: new Text('Submit'),
+        FlatButton(
+          child: Text('Submit'),
           onPressed: () {
             if (_formKey.currentState.validate()) {
               widget.p.addComment(_input);
