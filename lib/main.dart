@@ -85,14 +85,14 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Colors.white, Colors.white],
-                    begin: FractionalOffset.topRight,
-                    end: FractionalOffset.bottomLeft,
-                    tileMode: TileMode.clamp)),
-          ),
+//          Container(
+//            decoration: BoxDecoration(
+//                gradient: LinearGradient(
+//                    colors: [Colors.white, Colors.white],
+//                    begin: FractionalOffset.topRight,
+//                    end: FractionalOffset.bottomLeft,
+//                    tileMode: TileMode.clamp)),
+//          ),
           Center(
               child: Hero(
             tag: "logo",
