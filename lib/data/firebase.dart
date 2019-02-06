@@ -45,50 +45,6 @@ Future<void> updateUserDB() async {
   }
 }
 
-Future<void> updateEmotionDB(String emotionImURL) async {
-  if (emotionImURL != null) {
-    final QuerySnapshot result = await Firestore.instance
-        .collection('emotion')
-        .where('id', isEqualTo: UserData().user.uid)
-        .getDocuments();
-    final List<DocumentSnapshot> documents = result.documents;
-    if (documents.length == 0) {
-      Firestore.instance
-          .collection('emotion')
-          .document(UserData().user.uid)
-          .setData({
-        'uid': UserData().user.uid,
-        'photoUrl': emotionImURL,
-      });
-    }
-  }
-}
-
-Future<void> registerForProduct() async {
-  bool _isRegistered = await isRegistered();
-  if (!_isRegistered) {
-    Firestore.instance
-        .collection('registered')
-        .document(UserData().user.uid)
-        .setData({
-      'name': UserData().user.name,
-      'photoUrl': UserData().user.profileImage,
-      'id': UserData().user.uid,
-      'email': UserData().user.email,
-      'processed': false,
-    });
-  }
-}
-
-Future<bool> isRegistered() async {
-  final QuerySnapshot result = await Firestore.instance
-      .collection('registered')
-      .where('id', isEqualTo: UserData().user.uid)
-      .getDocuments();
-  final List<DocumentSnapshot> documents = result.documents;
-  return documents.length != 0;
-}
-
 Future<String> uploadImage(File imageFile) async {
   String _fileName =
       "${new Random().nextInt(10000)}_${new Random().nextInt(10000)}_${new Random().nextInt(10000)}.jpg";

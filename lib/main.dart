@@ -157,10 +157,7 @@ class _AppState extends State<App> {
                 angle: -math.pi / 4.8,
                 alignment: Alignment.center,
                 child: ClipPath(
-                  //clipper:  BackgroundImageClipper(),
                   child: Container(
-//                    padding: const EdgeInsets.only(
-//                        bottom: 20.0, right: 0.0, left: 60.0),
                     child: Image(
                         width: h / 2.0,
                         height: h / 2.0,
@@ -191,7 +188,7 @@ class _AppState extends State<App> {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: GoogleSignInButton(
               onPressed: () {
-                print("Sign in Successful!\nWelcome to FunKrafte!");
+                print("Sign in Successful!\nWelcome to Zeal!");
                 Navigator.of(context).pushReplacementNamed('/home');
               },
             ),
