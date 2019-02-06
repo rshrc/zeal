@@ -2,16 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 class User {
-  User(
-      {@required this.uid,
-      this.email,
-      this.name,
-      this.profileImage,
-      this.followers,
-      this.following,
-      this.bio,
-      this.isAdmin,
-      this.hobbies}) {
+  User({
+    @required this.uid,
+    this.email,
+    this.name,
+    this.profileImage,
+    this.followers,
+    this.following,
+    this.bio,
+    this.isAdmin,
+    this.hobbies,
+  }) {
     _fetchUser(uid);
     if (followers == null) followers = Set();
     if (following == null) following = Set();
