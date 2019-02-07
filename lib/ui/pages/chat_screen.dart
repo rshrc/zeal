@@ -28,17 +28,24 @@ class ChatScreenState extends State<ChatScreen> {
         child: Row(
           children: <Widget>[
             Flexible(
-              child: TextField(
-                decoration:
-                    InputDecoration.collapsed(hintText: "Send a message"),
-                controller: _textController,
-                onSubmitted: _handleSubmitted,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: InputDecoration.collapsed(
+                    hintText: "Send a message",
+                  ),
+                  controller: _textController,
+                  onSubmitted: _handleSubmitted,
+                ),
               ),
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 4.0),
               child: IconButton(
-                icon: Icon(Icons.send),
+                icon: Icon(
+                  Icons.send,
+                  color: Theme.of(context).primaryColor,
+                ),
                 onPressed: () => _handleSubmitted(_textController.text),
               ),
             )
@@ -51,7 +58,10 @@ class ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Friend Name"), centerTitle: true,),
+      appBar: AppBar(
+        title: Text("Friend Name"),
+        centerTitle: true,
+      ),
       body: Column(
         children: <Widget>[
           Flexible(
