@@ -39,6 +39,7 @@ Future<void> updateUserDB() async {
         'isAdmin': UserData().user.isAdmin,
         'followers': List(),
         'following': List(),
+        'hobbies': List(),
         'bio': ""
       });
     }

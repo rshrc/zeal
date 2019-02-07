@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:zeal/data/app_data.dart';
 import 'package:zeal/data/post.dart';
 import 'package:zeal/ui/comments.dart';
-import 'package:photo_view/photo_view.dart';
 
 class PostWidget extends StatelessWidget {
   final Post p;
@@ -81,9 +81,11 @@ class UserInfoRowState extends State<UserInfoRow> {
         .collection('users')
         .where('id', isEqualTo: widget.id)
         .getDocuments()
-        .then((result) => result.documents.elementAt(0)['photoUrl']);
+        .then((result) => result.documents.length == 0
+            ? ""
+            : result.documents.elementAt(0)['photoUrl']);
     try {
-      if (this.mounted)
+      if (this.mounted && (url != "" || url != null))
         setState(() {
           imageUrl = url;
         });
