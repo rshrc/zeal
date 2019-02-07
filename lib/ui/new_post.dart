@@ -80,28 +80,33 @@ class PostFormState extends State<PostForm> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: RaisedButton(
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      if (file == null)
-                        Scaffold.of(context).showSnackBar(
-                            SnackBar(content: Text('Please select an image!')));
-                      else {
-                        Scaffold.of(context).showSnackBar(
-                            SnackBar(content: Text('Uploading content')));
-                        uploadImage(file).then((value) {
-                          Post(
-                              imageUrl: value,
-                              caption: caption,
-                              uid: UserData().user.uid);
-                        });
-                        Navigator.of(context).pop();
+                child: ButtonTheme(
+                  minWidth: 64.0,
+                  child: RaisedButton(
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        if (file == null)
+                          Scaffold.of(context).showSnackBar(
+                              SnackBar(content: Text('Please select an image!')));
+                        else {
+                          Scaffold.of(context).showSnackBar(
+                              SnackBar(content: Text('Uploading content')));
+                          uploadImage(file).then((value) {
+                            Post(
+                                imageUrl: value,
+                                caption: caption,
+                                uid: UserData().user.uid);
+                          });
+                          Navigator.of(context).pop();
+                        }
                       }
-                    }
-                  },
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(color: Theme.of(context).primaryColor),
+                    },
+                    child: Center(
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(color: Theme.of(context).primaryColor),
+                      ),
+                    ),
                   ),
                 ),
               ),
