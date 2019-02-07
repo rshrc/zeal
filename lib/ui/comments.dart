@@ -139,7 +139,7 @@ class UserCommentState extends State<UserComment> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              imageUrl == null
+              imageUrl == null || imageUrl == ""
                   ? CircularProgressIndicator()
                   : CircleAvatar(
                       backgroundImage: CachedNetworkImageProvider(imageUrl)),

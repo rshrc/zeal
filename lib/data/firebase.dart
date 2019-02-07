@@ -39,6 +39,7 @@ Future<void> updateUserDB() async {
         'isAdmin': UserData().user.isAdmin,
         'followers': List(),
         'following': List(),
+        'hobbies': List(),
         'bio': ""
       });
     }
@@ -68,3 +69,12 @@ Future<File> getImage() async {
 }
 
 void createPost() {}
+
+Future<String> getUsername(String uid) async {
+  return await Firestore.instance
+      .collection('users')
+      .where('id', isEqualTo: uid)
+      .getDocuments()
+      .then((v) =>
+          v.documents.length == 0 ? uid : v.documents.elementAt(0)['name']);
+}

@@ -74,7 +74,7 @@ class User {
         'following': following.toList(),
         'isAdmin': isAdmin,
         'bio': bio,
-        'hobbies': hobbies,
+        'hobbies': hobbies.toList(),
       };
 
   void _serverUpdate() {
