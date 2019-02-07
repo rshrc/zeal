@@ -33,14 +33,17 @@ class _CommentsState extends State<Comments> {
         ]),
         centerTitle: true,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          UserInfoRow(id: widget.p.uid, p: widget.p),
-          LikesAndCaption(p: widget.p),
-          Divider(),
-          Expanded(child: CommentsList(p: widget.p)),
-        ],
+      body: RefreshIndicator(
+        onRefresh: () => widget.p.reloadPostData().then((v) => setState(() {})),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            UserInfoRow(id: widget.p.uid, p: widget.p),
+            LikesAndCaption(p: widget.p),
+            Divider(),
+            Expanded(child: CommentsList(p: widget.p)),
+          ],
+        ),
       ),
     );
   }
@@ -69,7 +72,8 @@ class _CommentsListState extends State<CommentsList> {
               uid: widget.p.comments[postIdList[adjIndex]][0],
               content: widget.p.comments[postIdList[adjIndex]][1],
               delCb: () {
-                if (!UserData().isAdmin) return;
+                if (!UserData().isAdmin && UserData().user.uid != widget.p.uid)
+                  return;
                 widget.p.comments.remove(postIdList[adjIndex]);
                 widget.p.serverUpdate();
                 setState(() {});
@@ -172,10 +176,12 @@ class UserCommentState extends State<UserComment> {
               ),
             ],
           ),
-          FlatButton(
-            child: Icon(Icons.clear),
-            onPressed: widget.delCb,
-          )
+          (!UserData().isAdmin && UserData().user.uid != widget.uid)
+              ? Container()
+              : FlatButton(
+                  child: Icon(Icons.clear),
+                  onPressed: widget.delCb,
+                )
         ],
       ),
     );

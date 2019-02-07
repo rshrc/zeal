@@ -30,6 +30,18 @@ class Post {
       loadFromDs();
   }
 
+  Future<void> reloadPostData() async {
+    await Firestore.instance
+        .collection('posts')
+        .where('id', isEqualTo: this.id)
+        .getDocuments()
+        .then((v) {
+      DocumentSnapshot _ds = v.documents[0];
+      ds = _ds;
+      loadFromDs();
+    });
+  }
+
   String randomStringGen() {
     return "${Random().nextInt(10000)}-${Random().nextInt(10000)}";
   }
