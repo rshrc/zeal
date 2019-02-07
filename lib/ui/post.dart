@@ -65,9 +65,11 @@ class UserInfoRowState extends State<UserInfoRow> {
         .collection('users')
         .where('id', isEqualTo: widget.id)
         .getDocuments()
-        .then((result) => result.documents.elementAt(0)['name']);
+        .then((result) => result.documents.length == 0
+            ? ""
+            : result.documents.elementAt(0)['name']);
     try {
-      if (this.mounted)
+      if (this.mounted && (name != "" && name != null))
         setState(() {
           userName = name;
         });
@@ -85,7 +87,7 @@ class UserInfoRowState extends State<UserInfoRow> {
             ? ""
             : result.documents.elementAt(0)['photoUrl']);
     try {
-      if (this.mounted && (url != "" || url != null))
+      if (this.mounted && (url != "" && url != null))
         setState(() {
           imageUrl = url;
         });
@@ -117,7 +119,7 @@ class UserInfoRowState extends State<UserInfoRow> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              imageUrl == null
+              imageUrl == null || imageUrl == ""
                   ? CircularProgressIndicator()
                   : CircleAvatar(
                       backgroundImage: CachedNetworkImageProvider(imageUrl)),
