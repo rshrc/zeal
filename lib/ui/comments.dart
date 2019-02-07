@@ -97,35 +97,43 @@ class UserCommentState extends State<UserComment> {
   String _userName = "";
 
   Future<void> _getUserName() async {
-    var name = await Firestore.instance
+    await Firestore.instance
         .collection('users')
         .where('id', isEqualTo: widget.uid)
         .getDocuments()
-        .then((result) => result.documents.elementAt(0)['name']);
-    try {
-      if (this.mounted)
-        setState(() {
-          _userName = name;
-        });
-    } catch (e) {
-      print(e);
-    }
+        .then((result) {
+      var name = result.documents.length == 0
+          ? ""
+          : result.documents.elementAt(0)['name'];
+      try {
+        if (this.mounted && (name != null && name != ""))
+          setState(() {
+            _userName = name;
+          });
+      } catch (e) {
+        print(e);
+      }
+    });
   }
 
   Future<void> _getUserImageUrl() async {
-    var url = await Firestore.instance
+    await Firestore.instance
         .collection('users')
         .where('id', isEqualTo: widget.uid)
         .getDocuments()
-        .then((result) => result.documents.elementAt(0)['photoUrl']);
-    try {
-      if (this.mounted)
-        setState(() {
-          imageUrl = url;
-        });
-    } catch (e) {
-      print(e);
-    }
+        .then((result) {
+      var url = result.documents.length == 0
+          ? ""
+          : result.documents.elementAt(0)['photoUrl'];
+      try {
+        if (this.mounted && (url != null && url != ""))
+          setState(() {
+            imageUrl = url;
+          });
+      } catch (e) {
+        print(e);
+      }
+    });
   }
 
   @override

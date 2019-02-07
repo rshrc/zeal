@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zeal/data/app_data.dart';
 import 'package:zeal/data/auth.dart';
 import 'package:zeal/ui/drawer_tabs/feed.dart';
+import 'package:zeal/ui/new_post.dart';
 import 'package:zeal/ui/pages/discover_people.dart';
 import 'package:zeal/ui/pages/notification_page.dart';
 import 'package:zeal/ui/pages/profile_page.dart';
@@ -19,7 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
     updateAdmin().then((value) => setState(() {}));
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.add), onPressed: () {}),
+        leading: IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => NewPost()))),
         title: Text(
           "Zeal",
           style: TextStyle(fontFamily: "zeal", fontSize: 30.0),
