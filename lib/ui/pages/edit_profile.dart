@@ -16,8 +16,9 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Dialog(
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
             Padding(
