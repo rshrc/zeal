@@ -66,7 +66,7 @@ class User {
   }
 
   Map<String, dynamic> toJson() => {
-        "uid": uid,
+        "id": uid,
         'email': email,
         'name': name,
         'photoUrl': profileImage,

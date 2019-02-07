@@ -97,7 +97,7 @@ class UserComment extends StatefulWidget {
 }
 
 class UserCommentState extends State<UserComment> {
-  String imageUrl;
+  String _imageUrl;
   String _userName = "";
 
   Future<void> _getUserName() async {
@@ -132,7 +132,7 @@ class UserCommentState extends State<UserComment> {
       try {
         if (this.mounted && (url != null && url != ""))
           setState(() {
-            imageUrl = url;
+            _imageUrl = url;
           });
       } catch (e) {
         print(e);
@@ -142,8 +142,8 @@ class UserCommentState extends State<UserComment> {
 
   @override
   Widget build(BuildContext context) {
-    _getUserImageUrl();
-    _getUserName();
+    if (_imageUrl == null || _imageUrl == "") _getUserImageUrl();
+    if (_userName == null || _userName == "") _getUserName();
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Row(
@@ -151,10 +151,10 @@ class UserCommentState extends State<UserComment> {
         children: <Widget>[
           Row(
             children: <Widget>[
-              imageUrl == null || imageUrl == ""
+              _imageUrl == null || _imageUrl == ""
                   ? CircularProgressIndicator()
                   : CircleAvatar(
-                      backgroundImage: CachedNetworkImageProvider(imageUrl)),
+                      backgroundImage: CachedNetworkImageProvider(_imageUrl)),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10.0),
                 child: Column(
