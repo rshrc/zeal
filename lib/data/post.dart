@@ -4,9 +4,10 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:zeal/data/app_data.dart';
-import 'package:zeal/ui/common.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:zeal/data/app_data.dart';
+import 'package:zeal/data/firebase.dart';
+import 'package:zeal/ui/common.dart';
 
 class Post {
   /// Let's just avoid conflicts here :)
@@ -20,6 +21,7 @@ class Post {
   Map<String, List<dynamic>> comments = new Map();
   Set<String> likedBy = new Set();
   DocumentSnapshot ds;
+  String _origuname = "";
 
   Post({this.id, this.imageUrl, this.caption, this.ds, this.uid}) {
     if (ds == null) {
@@ -56,8 +58,10 @@ class Post {
   void share() {
     if (UserData().user.uid != uid) {
       id = "";
-      uid = UserData().user.uid;
-      publishDoc();
+      getUsername(uid).then((v) {
+        _origuname = v;
+        publishDoc(share: true);
+      });
     }
   }
 
@@ -68,18 +72,20 @@ class Post {
         .updateData({'likedBy': likedBy.toList(), 'comments': comments});
   }
 
-  Map<String, dynamic> toJson() => {
-        "uid": uid,
+  Map<String, dynamic> toJson({bool share = false}) => {
+        "uid": share ? UserData().user.uid : uid,
         "id": id,
         "imageUrl": imageUrl,
-        "caption": caption,
-        "likedBy": likedBy.toList(),
-        "comments": comments
+        "caption":
+            share ? "Originally posted by $_origuname\n" + caption : caption,
+        "likedBy": share ? List() : likedBy.toList(),
+        "comments": share ? Map() : comments
       };
 
-  Future<void> publishDoc() async {
-    DocumentReference ref =
-        await Firestore.instance.collection('posts').add(this.toJson());
+  Future<void> publishDoc({bool share = false}) async {
+    DocumentReference ref = await Firestore.instance
+        .collection('posts')
+        .add(this.toJson(share: share));
     id = ref.documentID;
     ref.updateData({'id': id});
     ds = await ref.get();
