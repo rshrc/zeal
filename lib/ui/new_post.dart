@@ -99,7 +99,10 @@ class PostFormState extends State<PostForm> {
                       }
                     }
                   },
-                  child: Text('Submit'),
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ),
             ],

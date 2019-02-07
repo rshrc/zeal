@@ -19,14 +19,13 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    if (widget.user.uid == UserData().user.uid)
-      Future.delayed(Duration(seconds: 1), () {
-        if (!mounted) return;
-        setState(() {
-          isSelfProfile = true;
-          initialized = true;
-        });
+    Future.delayed(Duration(seconds: 1), () {
+      if (!mounted) return;
+      setState(() {
+        isSelfProfile = widget.user.uid == UserData().user.uid;
+        initialized = true;
       });
+    });
   }
 
   @override

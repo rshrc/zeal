@@ -64,7 +64,7 @@ class UploadImageButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Icon(Icons.image, color: Colors.white),
+            Icon(Icons.image, color: Theme.of(context).primaryColor),
             SizedBox(
               width: AppData().scaleFactorW * 20.0,
             ),
@@ -76,7 +76,7 @@ class UploadImageButton extends StatelessWidget {
                 style: TextStyle(
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     fontSize: AppData().scaleFactorH * 20.0),
               ),
             ),
