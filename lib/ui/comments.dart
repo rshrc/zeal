@@ -59,12 +59,9 @@ class CommentsList extends StatefulWidget {
 }
 
 class _CommentsListState extends State<CommentsList> {
-  List postIdList;
-
   @override
   Widget build(BuildContext context) {
-    postIdList = List.from(widget.p.comments.keys);
-    return ListView.builder(
+    /*return ListView.builder(
         itemCount: widget.p.comments.length,
         itemBuilder: (context, index) {
           int adjIndex = (widget.p.comments.length - 1) - index;
@@ -76,8 +73,46 @@ class _CommentsListState extends State<CommentsList> {
                   return;
                 widget.p.comments.remove(postIdList[adjIndex]);
                 widget.p.serverUpdate();
-                setState(() {});
+                widget.p.reloadPostData().then((v) => setState(
+                    () => postIdList = List.from(widget.p.comments.keys)));
               });
+        });*/
+    return StreamBuilder(
+        stream: Firestore.instance
+            .collection('posts')
+            .where('id', isEqualTo: widget.p.id)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Center(child: CircularProgressIndicator());
+          else
+            return ListView.builder(
+                itemCount: snapshot.data.documents[0]['comments'].length,
+                itemBuilder: (context, index) {
+                  widget.p.reloadPostData();
+                  int adjIndex =
+                      (snapshot.data.documents[0]['comments'].length - 1) -
+                          index;
+                  return UserComment(
+                    uid: snapshot.data.documents[0]['comments'][
+                        List.from(snapshot.data.documents[0]['comments'].keys)[
+                            adjIndex]][0],
+                    content: snapshot.data.documents[0]['comments'][
+                        List.from(snapshot.data.documents[0]['comments'].keys)[
+                            adjIndex]][1],
+                    delCb: () {
+                      if (!UserData().isAdmin &&
+                          UserData().user.uid != widget.p.uid) return;
+                      widget.p.reloadPostData();
+                      widget.p.comments.remove(List.from(snapshot
+                          .data.documents[0]['comments'].keys)[adjIndex]);
+                      widget.p.serverUpdate();
+                      widget.p.reloadPostData().then((v) => setState(() {}));
+                    },
+                  );
+                  //return PostWidget(
+                  //    p: Post(ds: snapshot.data.documents[adjIndex]));
+                });
         });
   }
 }
@@ -110,10 +145,12 @@ class UserCommentState extends State<UserComment> {
           ? ""
           : result.documents.elementAt(0)['name'];
       try {
-        if (this.mounted && (name != null && name != ""))
+        if (this.mounted && (name != null && name != "")) if (_userName != name)
           setState(() {
             _userName = name;
           });
+        else
+          _userName = name;
       } catch (e) {
         print(e);
       }
@@ -130,20 +167,26 @@ class UserCommentState extends State<UserComment> {
           ? ""
           : result.documents.elementAt(0)['photoUrl'];
       try {
-        if (this.mounted && (url != null && url != ""))
+        if (this.mounted && (url != null && url != "")) if (_imageUrl != url)
           setState(() {
             _imageUrl = url;
           });
+        else
+          _imageUrl = url;
       } catch (e) {
         print(e);
       }
     });
   }
 
+  Future<void> _getStuff() async {
+    await _getUserImageUrl();
+    await _getUserName();
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (_imageUrl == null || _imageUrl == "") _getUserImageUrl();
-    if (_userName == null || _userName == "") _getUserName();
+    _getStuff();
     return Padding(
       padding: EdgeInsets.all(16.0),
       child: Row(
