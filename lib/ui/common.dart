@@ -92,3 +92,26 @@ Future<Null> popupMenuBuilder(BuildContext context, Widget child,
       barrierDismissible: dismiss,
       builder: (BuildContext context) => child);
 }
+
+Widget appBar(BuildContext context) {
+  return SliverAppBar(
+    title: Text(
+      "Zeal",
+      style: TextStyle(fontFamily: "zeal", fontSize: 30.0),
+    ),
+    actions: <Widget>[
+      Transform.rotate(
+        angle: -22 / 7 / 4.8,
+
+        /// The Message Button takes you to the Chat Screen
+        child: IconButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed('/zeal_chat');
+          },
+          icon: Icon(Icons.send),
+        ),
+      ),
+    ],
+    centerTitle: true,
+  );
+}
