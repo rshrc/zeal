@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:core';
 import 'dart:math';
+import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +23,9 @@ class Post {
   Set<String> likedBy = new Set();
   DocumentSnapshot ds;
   String _origuname = "";
+  bool private = false;
 
-  Post({this.id, this.imageUrl, this.caption, this.ds, this.uid}) {
+  Post({this.id, this.imageUrl, this.caption, this.ds, this.uid, this.private}) {
     if (ds == null) {
       publishDoc();
     } else
@@ -91,7 +93,8 @@ class Post {
         "caption":
             share ? "Originally posted by $_origuname\n" + caption : caption,
         "likedBy": share ? List() : likedBy.toList(),
-        "comments": share ? Map() : comments
+        "comments": share ? Map() : comments,
+    "private": private
       };
 
   Future<void> publishDoc({bool share = false}) async {
@@ -143,6 +146,7 @@ class Post {
     caption = ds['caption'];
     likedBy = new Set.from(ds['likedBy']);
     likes = likedBy == null ? 0 : likedBy.length;
+    private = ds['private'];
     setLiked();
     if (ds['comments'] == null) {
       comments = new Map();
